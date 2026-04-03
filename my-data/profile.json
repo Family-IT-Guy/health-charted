@@ -1,0 +1,21 @@
+{
+  "_type": "health-charted/profile",
+  "subject": {
+    "name": null,
+    "date_of_birth": null,
+    "sex": null,
+    "blood_type": null
+  },
+  "user": {
+    "relationship_to_subject": null,
+    "name": null
+  },
+  "goals": [],
+  "conditions": [],
+  "medications": [],
+  "supplements": [],
+  "allergies": [],
+  "providers": [],
+  "family_history": [],
+  "insurance": null
+}

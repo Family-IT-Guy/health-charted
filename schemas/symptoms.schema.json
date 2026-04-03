@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "health-charted/symptoms",
+  "title": "Health Charted Symptoms",
+  "description": "Symptom observations treated as scientific inquiry: observe, hypothesize, test, validate or invalidate.",
+  "type": "object",
+  "properties": {
+    "_type": {
+      "const": "health-charted/symptoms",
+      "description": "File type identifier"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": { "type": "string" },
+          "symptoms_observed": { "type": "string" },
+          "severity": { "type": ["integer", "null"], "description": "1-5 per severity scale in data-routing guide or user override in my-config" },
+          "duration": { "type": ["string", "null"] },
+          "context": { "type": ["string", "null"], "description": "Activity, environment, emotional state, time of day" },
+          "suspected_triggers": { "type": ["string", "null"] },
+          "new_symptom": { "type": "boolean", "description": "True if this is the first report of this symptom" },
+          "hypothesis": { "type": ["string", "null"], "description": "What might explain this, with evidence tier" },
+          "hypothesis_status": { "type": ["string", "null"], "description": "open, confirmed, refuted, superseded" }
+        }
+      }
+    }
+  }
+}

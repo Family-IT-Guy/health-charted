@@ -1,0 +1,10 @@
+{
+  "_type": "health-charted/environment",
+  "sleep": null,
+  "diet": null,
+  "exercise": [],
+  "stress": null,
+  "living_situation": null,
+  "triggers": [],
+  "relievers": []
+}

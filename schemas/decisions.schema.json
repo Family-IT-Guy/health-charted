@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "health-charted/decisions",
+  "title": "Health Charted Decisions",
+  "description": "Permanent decision log. Never pruned. Reversals reference originals.",
+  "type": "object",
+  "properties": {
+    "_type": {
+      "const": "health-charted/decisions",
+      "description": "File type identifier"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": { "type": "string" },
+          "decided": { "type": "string", "description": "What was decided" },
+          "options_considered": { "type": ["string", "null"], "description": "What alternatives were evaluated" },
+          "reasoning": { "type": ["string", "null"], "description": "Why this option was chosen" },
+          "affects": { "type": ["string", "null"], "description": "What this decision impacts" },
+          "references": { "type": ["string", "null"], "description": "Research or reference files that informed this decision" },
+          "outcome": { "type": ["string", "null"], "description": "Filled later when outcome is known" },
+          "reversed_by": { "type": ["string", "null"], "description": "Date and reference to the reversal decision, if reversed" }
+        }
+      }
+    }
+  }
+}

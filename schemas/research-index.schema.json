@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "health-charted/research-index",
+  "title": "Health Charted Research Index",
+  "description": "Index of deep research files. Aging metadata lives in each research file's frontmatter, not here.",
+  "type": "object",
+  "properties": {
+    "_type": {
+      "const": "health-charted/research-index",
+      "description": "File type identifier"
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": { "type": "string", "description": "Filename relative to research/" },
+          "topic": { "type": "string" },
+          "summary": { "type": "string" },
+          "when_to_reference": { "type": "string", "description": "When this file is useful during a session" }
+        }
+      }
+    }
+  }
+}

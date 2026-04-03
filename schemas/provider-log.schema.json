@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "health-charted/provider-log",
+  "title": "Health Charted Provider Log",
+  "description": "Visit history with conflict tracking. Provider roster lives in profile.json.",
+  "type": "object",
+  "properties": {
+    "_type": {
+      "const": "health-charted/provider-log",
+      "description": "File type identifier"
+    },
+    "visits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": { "type": "string" },
+          "provider": { "type": "string", "description": "Use canonical provider name from profile.json providers array" },
+          "type": { "type": ["string", "null"], "description": "Routine, urgent, follow-up, specialist consult, etc." },
+          "summary": { "type": ["string", "null"] },
+          "orders": { "type": ["string", "null"], "description": "Labs, imaging, referrals ordered" },
+          "follow_up": { "type": ["string", "null"] },
+          "conflicts_with_current_understanding": { "type": ["string", "null"], "description": "Where provider's advice conflicts with system's analysis" },
+          "provider_terminology": { "type": ["string", "null"], "description": "Provider's term if different from canonical name for a condition or treatment" }
+        }
+      }
+    }
+  }
+}

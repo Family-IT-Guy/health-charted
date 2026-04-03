@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "health-charted/lab-history",
+  "title": "Health Charted Lab History",
+  "description": "Timestamped lab results with context, interpretation, and recheck scheduling.",
+  "type": "object",
+  "properties": {
+    "_type": {
+      "const": "health-charted/lab-history",
+      "description": "File type identifier"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": { "type": "string" },
+          "context": { "type": ["string", "null"], "description": "Why these labs were ordered, fasting state, time of day" },
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "marker": { "type": "string" },
+                "value": { "type": "string" },
+                "standard_range": { "type": ["string", "null"] },
+                "functional_optimal": { "type": ["string", "null"] },
+                "assessment": { "type": ["string", "null"] }
+              }
+            }
+          },
+          "interpretation": { "type": ["string", "null"] },
+          "actions": { "type": ["string", "null"] },
+          "hypotheses": { "type": ["string", "null"] },
+          "next_recheck": { "type": ["string", "null"] }
+        }
+      }
+    }
+  }
+}

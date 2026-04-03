@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "health-charted/config",
+  "title": "Health Charted Config",
+  "description": "User preferences and overrides. Never touched by updates. Populated by the LLM as the user expresses preferences.",
+  "type": "object",
+  "properties": {
+    "_type": {
+      "const": "health-charted/config",
+      "description": "File type identifier"
+    },
+    "severity_scale": {
+      "type": ["object", "null"],
+      "description": "Custom severity scale override. If null, default scale from data-routing guide is used."
+    },
+    "preferences": {
+      "type": "object",
+      "description": "Open object for user preferences (communication style, research depth defaults, etc.)"
+    }
+  }
+}
