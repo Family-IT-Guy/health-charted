@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "health-charted/environment",
+  "title": "Health Charted Environment",
+  "description": "Sleep, diet, exercise, stress, and lifestyle factors that influence health outcomes.",
+  "type": "object",
+  "properties": {
+    "_type": {
+      "const": "health-charted/environment",
+      "description": "File type identifier"
+    },
+    "sleep": { "type": ["string", "null"], "description": "Sleep patterns, quality, duration, issues" },
+    "diet": { "type": ["string", "null"], "description": "Dietary patterns, restrictions, notable habits" },
+    "exercise": {
+      "type": "array",
+      "description": "Physical activities with type, frequency, and intensity",
+      "items": {
+        "type": "object",
+        "properties": {
+          "activity": { "type": "string" },
+          "frequency": { "type": ["string", "null"] },
+          "intensity": { "type": ["string", "null"] },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "stress": { "type": ["string", "null"], "description": "Stress sources, management strategies, current level" },
+    "living_situation": { "type": ["string", "null"], "description": "Home environment, exposures, relevant context" },
+    "triggers": {
+      "type": "array",
+      "description": "Identified environmental factors that worsen symptoms",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "affects": { "type": ["string", "null"], "description": "Which symptoms or conditions this triggers" },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "relievers": {
+      "type": "array",
+      "description": "Identified environmental factors that improve symptoms",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "affects": { "type": ["string", "null"], "description": "Which symptoms or conditions this relieves" },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    }
+  }
+}

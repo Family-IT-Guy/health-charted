@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "health-charted/session-status",
+  "title": "Health Charted Session Status",
+  "description": "Fast on-ramp for new sessions. Snapshot of current state, not a history.",
+  "type": "object",
+  "properties": {
+    "_type": {
+      "const": "health-charted/session-status",
+      "description": "File type identifier"
+    },
+    "quick_context": {
+      "type": ["string", "null"],
+      "description": "Current focus, what changed recently, where things stand right now"
+    },
+    "current_priorities": {
+      "type": "array",
+      "description": "What matters most right now, ordered by importance",
+      "items": { "type": "string" }
+    },
+    "pending_action_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item": { "type": "string" },
+          "date_added": { "type": ["string", "null"] },
+          "deadline": { "type": ["string", "null"] },
+          "status": { "type": "string", "description": "pending, in_progress, completed, deferred" }
+        }
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "description": "Unresolved questions being investigated",
+      "items": { "type": "string" }
+    },
+    "next_scheduled": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "event": { "type": "string" },
+          "date": { "type": ["string", "null"] },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "onboarding": {
+      "type": ["object", "null"],
+      "description": "Onboarding progress tracker. Null before first run. Populated by LLM on first session.",
+      "properties": {
+        "status": { "type": "string", "description": "in_progress or completed" },
+        "phase_1": {
+          "type": "object",
+          "description": "First visit steps. Welcome with capabilities, chief complaint, structured intake, privacy. Each holds a timestamp when completed, or null if pending.",
+          "properties": {
+            "welcome": { "type": ["string", "null"], "description": "Capabilities overview and introduction" },
+            "intake": { "type": ["string", "null"], "description": "Structured health intake covering history, medications, supplements, allergies, family history, lifestyle, providers, labs, goals" },
+            "privacy_disclosure": { "type": ["string", "null"] }
+          }
+        },
+        "phase_2": {
+          "type": "object",
+          "description": "Infrastructure steps. Happen after first conversation delivers value, or next session. Each holds a timestamp when completed, or null if pending.",
+          "properties": {
+            "backup_setup": { "type": ["string", "null"] },
+            "tool_setup": { "type": ["string", "null"] },
+            "initial_priorities_set": { "type": ["string", "null"] }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "health-charted/profile",
+  "title": "Health Charted Profile",
+  "description": "Identity, conditions, goals, providers, medications, and family history for the subject.",
+  "type": "object",
+  "properties": {
+    "_type": {
+      "const": "health-charted/profile",
+      "description": "File type identifier"
+    },
+    "subject": {
+      "type": "object",
+      "description": "The person whose health is being tracked",
+      "properties": {
+        "name": { "type": ["string", "null"], "description": "Full name" },
+        "date_of_birth": { "type": ["string", "null"], "description": "Date of birth or approximate age" },
+        "sex": { "type": ["string", "null"], "description": "Biological sex (relevant for lab ranges and drug metabolism)" },
+        "blood_type": { "type": ["string", "null"], "description": "Blood type if known" }
+      }
+    },
+    "user": {
+      "type": "object",
+      "description": "The person using the system (may differ from subject, e.g., parent managing child's health)",
+      "properties": {
+        "relationship_to_subject": { "type": ["string", "null"], "description": "self, parent, caregiver, provider, or other" },
+        "name": { "type": ["string", "null"], "description": "User's name if different from subject" }
+      }
+    },
+    "goals": {
+      "type": "array",
+      "description": "What the user wants to accomplish: optimize general health, manage a condition, investigate unexplained symptoms, etc.",
+      "items": { "type": "string" }
+    },
+    "conditions": {
+      "type": "array",
+      "description": "Diagnosed or suspected conditions. Canonical name source for cross-file references.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "condition": { "type": "string", "description": "Canonical condition name" },
+          "date_of_diagnosis": { "type": ["string", "null"], "description": "When diagnosed or first suspected" },
+          "status": { "type": ["string", "null"], "description": "Current status: active, investigating, resolved, managed, etc." },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "medications": {
+      "type": "array",
+      "description": "Current and past medications. Canonical name source for cross-file references.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "description": "Canonical medication name. Use this exact string in all other files." },
+          "dose": { "type": ["string", "null"] },
+          "frequency": { "type": ["string", "null"] },
+          "prescriber": { "type": ["string", "null"] },
+          "start_date": { "type": ["string", "null"] },
+          "reason": { "type": ["string", "null"], "description": "Condition or symptom this treats" }
+        }
+      }
+    },
+    "supplements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "description": "Canonical supplement name" },
+          "dose": { "type": ["string", "null"] },
+          "form": { "type": ["string", "null"] },
+          "frequency": { "type": ["string", "null"] },
+          "start_date": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "allergies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "allergen": { "type": "string" },
+          "type": { "type": ["string", "null"] },
+          "severity": { "type": ["string", "null"] },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "providers": {
+      "type": "array",
+      "description": "Care team. Canonical name source for provider references in other files.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "role": { "type": "string" },
+          "name": { "type": "string", "description": "Canonical provider name. Use this exact string in all other files." },
+          "practice": { "type": ["string", "null"] },
+          "approach": { "type": ["string", "null"], "description": "Conventional, integrative, functional, etc." },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "family_history": {
+      "type": "array",
+      "description": "Relevant family health history entries",
+      "items": { "type": "string" }
+    },
+    "insurance": {
+      "type": ["string", "null"],
+      "description": "Coverage details relevant to care decisions"
+    }
+  }
+}

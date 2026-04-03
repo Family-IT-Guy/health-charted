@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "health-charted/reference-index",
+  "title": "Health Charted Reference Index",
+  "description": "Index of compact, actionable reference files built from research synthesis.",
+  "type": "object",
+  "properties": {
+    "_type": {
+      "const": "health-charted/reference-index",
+      "description": "File type identifier"
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": { "type": "string", "description": "Filename relative to reference/" },
+          "topic": { "type": "string" },
+          "summary": { "type": "string" },
+          "when_to_reference": { "type": "string", "description": "When this file is useful during a session" }
+        }
+      }
+    }
+  }
+}
