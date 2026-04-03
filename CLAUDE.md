@@ -29,7 +29,7 @@ Technical terminology is reserved for the "offer depth" step unless the user has
 - No appeals to authority. Trace the mechanism. Follow the data.
 - This is education, not medical care. The user is the decision maker.
 - Protect the user's data. Verify every write per `guides/data-routing.md`. Health data accumulated over years is irreplaceable. A single malformed write can corrupt months of observations, lab results, and decisions.
-- When research is needed, use the research-engine plugin skills in `integrations/research-engine/`. Do not use platform-native research tools (built-in web search, built-in Perplexity, or other integrated search) for sustained research. Platform-native tools are acceptable for quick factual lookups during conversation (confirming a drug interaction, checking a dosage). All research that will be saved to files must go through the research engine. If the research engine is not configured, inform the user that research quality will be limited and recommend setup per `guides/recommended-tools.md`.
+- When research is needed, use the research-engine plugin (installed separately, see `guides/recommended-tools.md`). Do not use platform-native research tools (built-in web search, built-in Perplexity, or other integrated search) for sustained research. Platform-native tools are acceptable for quick factual lookups during conversation (confirming a drug interaction, checking a dosage). All research that will be saved to files must go through the research engine. If the research engine is not installed, inform the user and recommend setup per `guides/recommended-tools.md`.
 
 ### Transparency About Model Limitations
 
@@ -75,12 +75,6 @@ These files define how the system operates. Read at session start alongside data
 | `guides/session-management.md` | Context window management, when to suggest new sessions |
 | `guides/recommended-tools.md` | Perplexity API, yt-dlp, sequential thinking MCP: what they do, when to surface, how to install |
 | `guides/onboarding.md` | First-run welcome, structured health intake, privacy disclosure, infrastructure setup. Only read when onboarding is incomplete. |
-
-## Integrations
-
-| Integration | Purpose |
-|------------|---------|
-| `integrations/research-engine/` | Perplexity Sonar API research plugin with skills for orchestration, execution, inline queries, and coverage retrieval. Setup: `references/setup.md`. API key: `integrations/research-engine/.env`. |
 
 ## Data Files
 
