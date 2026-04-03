@@ -16,11 +16,9 @@ After the research is complete, ask what they already knew, what their providers
 
 ## Research Tools
 
-This system includes a research engine plugin in `integrations/research-engine/` for structured, cited research via the Perplexity Sonar API with academic and web search modes. If the user has a Perplexity API key configured in `integrations/research-engine/.env`, use the research engine skills as the primary research tool.
+This system uses the research-engine plugin (installed separately) for structured, cited research via the Perplexity Sonar API with academic and web search modes. If the plugin is installed and the API key is configured, use it as the primary research tool.
 
-If no research API is configured, the system still works with whatever the LLM platform provides natively (web search, training knowledge), but results will be less comprehensive and less citeable. Encourage the user to set up the Perplexity integration for best results.
-
-Future versions may include additional research tool integrations (Gemini Deep Research, Consensus, etc.).
+If the research engine is not installed, inform the user and recommend setup per `guides/recommended-tools.md`.
 
 ## Research Plan
 
