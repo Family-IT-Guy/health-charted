@@ -33,9 +33,9 @@ Data accumulated over years is irreplaceable. Every write must be verified.
 Medications, supplements, conditions, and providers each have a canonical name that must be used consistently across all data files.
 
 **Canonical name sources:**
-- Medications and supplements: the `name` field in `my-data/treatment-stack.json`
-- Conditions: the `condition` field in `my-data/profile.json`
-- Providers: the `name` field in the providers array in `my-data/profile.json`
+- Medications and supplements: the `name` field in `my-data/treatments.json`
+- Conditions: the `condition` field in `my-data/health-profile.json`
+- Providers: the `name` field in the providers array in `my-data/health-profile.json`
 
 When referencing any of these entities in any data file, use the exact canonical name. Do not abbreviate, do not include dosage in the name, do not use alternate spellings.
 
@@ -53,7 +53,7 @@ Default symptom severity scale (1-5):
 4. Significant: frequent or intense, interfering with activities
 5. Severe: near-constant or very intense, significant distress or impairment
 
-The user can override this scale in `my-config.json` under `severity_scale`. If an override exists, use it instead of the default.
+The user can override this scale in `preferences.json` under `severity_scale`. If an override exists, use it instead of the default.
 
 ## Filter
 
@@ -67,14 +67,14 @@ If yes, capture it. If no, don't.
 
 | Information type | Examples | Target file | Cross-reference |
 |-----------------|----------|-------------|-----------------|
-| Lab results | Blood work values, test results, imaging findings | `my-data/lab-history.json` | Check against treatment-stack.json for medication effects. Check reference files for optimal ranges. Compare to previous values for trends. |
-| Symptom observations | New symptoms, severity changes, pattern changes, triggers identified | `my-data/symptoms.json` | Correlate with recent entries in environment.json and treatment-stack.json. Check for temporal relationships. |
-| Treatment changes | Medication started/stopped/adjusted, supplement changes, therapy sessions, lifestyle interventions | `my-data/treatment-stack.json` | Check for interactions with existing treatments. Update monitoring schedule. Note in session-status.json if follow-up needed. |
-| Environment changes | Sleep patterns, diet changes, exercise, stress, living situation, work, relationships | `my-data/environment.json` | Correlate with symptom patterns. Check for nutritional or physiological implications. |
-| Provider interactions | "Doctor said X", test ordered, appointment scheduled, referral made, recommendation given | `my-data/provider-log.json` | Route extracted data to all relevant files (lab orders to session-status.json as pending, medication changes to treatment-stack.json, etc.). Flag conflicts with current understanding. |
+| Lab results | Blood work values, test results, imaging findings | `my-data/lab-results.json` | Check against treatments.json for medication effects. Check reference files for optimal ranges. Compare to previous values for trends. |
+| Symptom observations | New symptoms, severity changes, pattern changes, triggers identified | `my-data/symptoms.json` | Correlate with recent entries in lifestyle.json and treatments.json. Check for temporal relationships. |
+| Treatment changes | Medication started/stopped/adjusted, supplement changes, therapy sessions, lifestyle interventions | `my-data/treatments.json` | Check for interactions with existing treatments. Update monitoring schedule. Note in status.json if follow-up needed. |
+| Environment changes | Sleep patterns, diet changes, exercise, stress, living situation, work, relationships | `my-data/lifestyle.json` | Correlate with symptom patterns. Check for nutritional or physiological implications. |
+| Provider interactions | "Doctor said X", test ordered, appointment scheduled, referral made, recommendation given | `my-data/visit-notes.json` | Route extracted data to all relevant files (lab orders to status.json as pending, medication changes to treatments.json, etc.). Flag conflicts with current understanding. |
 | Decisions | Treatment chosen or rejected, strategic health decisions, approach changes | `my-data/decisions.json` | Record reasoning, options considered, and evidence. Prevents re-recommendation in future sessions. Reference from other files when relevant. |
-| Action items | New tasks, completed items, upcoming deadlines, scheduled appointments | `my-data/session-status.json` | Remove when resolved. Note completion in the relevant file. **Always use the full object shape:** `{"item": "...", "date_added": "YYYY-MM-DD", "deadline": null, "status": "pending"}`. Never write action items as bare strings. `date_added` is required for aging detection. |
-| Profile changes | New provider, new diagnosis, medication list update, insurance change, family history update | `my-data/profile.json` | May affect interpretation of existing data. Flag if a profile change means previous recommendations should be reassessed. |
+| Action items | New tasks, completed items, upcoming deadlines, scheduled appointments | `my-data/status.json` | Remove when resolved. Note completion in the relevant file. **Always use the full object shape:** `{"item": "...", "date_added": "YYYY-MM-DD", "deadline": null, "status": "pending"}`. Never write action items as bare strings. `date_added` is required for aging detection. |
+| Profile changes | New provider, new diagnosis, medication list update, insurance change, family history update | `my-data/health-profile.json` | May affect interpretation of existing data. Flag if a profile change means previous recommendations should be reassessed. |
 
 ## Cross-Referencing
 

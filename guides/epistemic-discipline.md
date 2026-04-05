@@ -63,7 +63,7 @@ All interpretations are hypotheses until validated.
 - **Validate or invalidate as new information arrives.** Update the relevant data files explicitly. Mark invalidated hypotheses as "ruled out" with the reasoning and date.
 - **Never leave stale hypotheses.** If a hypothesis hasn't been validated or invalidated, it must be marked as "open" or "untested." Stale hypotheses mislead future sessions.
 - **Flag assumptions.** When data is incomplete and you're filling a gap with reasoning, state it as an assumption so future sessions can verify it against real data.
-- **Track in data files.** Hypotheses live in the data files where they're relevant (symptoms.md for symptom hypotheses, lab-history.md for lab-related hypotheses). The decisions log records which hypotheses informed which decisions.
+- **Track in data files.** Hypotheses live in the data files where they're relevant (symptoms.json for symptom hypotheses, lab-results.json for lab-related hypotheses). The decisions log records which hypotheses informed which decisions.
 
 ### Conflicts
 

@@ -1,12 +1,12 @@
 # Onboarding
 
-How to welcome a new user and build their health profile. Read this guide only when `onboarding` in `my-data/session-status.json` is null or has `status: "in_progress"`.
+How to welcome a new user and build their health profile. Read this guide only when `onboarding` in `my-data/status.json` is null or has `status: "in_progress"`.
 
 ## Initialization
 
 If `onboarding` is null, this is a first run:
 
-1. Write the onboarding tracker to `my-data/session-status.json`:
+1. Write the onboarding tracker to `my-data/status.json`:
    ```json
    "onboarding": {
      "status": "in_progress",
@@ -48,7 +48,7 @@ Do not use a scripted welcome. Generate it naturally from these constraints. Mus
 Before going further, ask who this health tracking is for. This is a routing question that shapes everything else.
 
 - **Self:** proceed normally.
-- **Someone else (child, aging parent, dependent):** ask about their relationship to the person. The user is the manager; the subject is the person whose health is being tracked. Adjust the intake to gather information about the subject. Record both in `my-data/profile.json` (the subject/user fields are designed for this split).
+- **Someone else (child, aging parent, dependent):** ask about their relationship to the person. The user is the manager; the subject is the person whose health is being tracked. Adjust the intake to gather information about the subject. Record both in `my-data/health-profile.json` (the subject/user fields are designed for this split).
 - **Multiple people:** explain that each person should have their own separate Health Charted folder. One person per folder keeps data clean and prevents cross-contamination. Offer to help create and initialize a second folder for the other person. Do not add a second person's data to this folder.
 
 ### Step 3: Chief complaint
@@ -59,18 +59,47 @@ Ask what brings them here (or what's going on with the person they're tracking).
 
 After addressing their immediate concern (or if they have none), transition to filling in the full picture: "Now let me get the rest of your/their health background so I can be more useful going forward."
 
-Work through these categories one question at a time, conversationally, skipping anything already covered. If tracking someone else, ask about the subject, not the user:
+Work through the categories below one question at a time, conversationally, skipping anything already covered. If tracking someone else, ask about the subject, not the user.
 
-- Age and sex (needed for lab range interpretation)
-- Medical history (diagnosed conditions, surgeries, major health events)
-- Current medications (name, dose, frequency, why, who prescribed)
-- Current supplements (name, dose, form)
-- Allergies
-- Family history (significant conditions in parents, siblings, grandparents)
-- Lifestyle (exercise, diet, sleep quality, stress, substances)
-- Current providers (who, what role, how often)
-- Recent labs or imaging (if the platform supports filesystem access, offer to search their computer for lab PDFs)
-- Goals (what they want from this, beyond any immediate concern)
+**Pacing:** These categories are not equal in depth. Age and allergies are one exchange. Family history and lifestyle are conversations. Let the user's situation determine how long you spend on each category. If they're sharing a lot, stay there. Do not rush through a deep category to maintain checklist pace. Before transitioning away from any category, ask: "Anything else about [topic] before we move on?"
+
+**Revisits welcome:** The intake is a coverage guide, not a rigid sequence. If the user returns to a previous topic at any point, stay with it. Human memory is associative — a question about sleep might trigger a memory about a grandmother's insomnia. Update the relevant data file, then return to where you left off. Never resist or redirect a user who is volunteering health information, regardless of where you are in the list.
+
+#### Quick categories
+
+- **Age and sex** — needed for lab range interpretation
+- **Allergies** — medications, foods, environmental
+- **Current supplements** — name, dose, form
+
+#### Deep categories
+
+These require multiple exchanges. Use this pattern: ask an open question, listen, probe gaps, follow threads, check for patterns, confirm completeness.
+
+- **Medical history** — Don't just ask for a list. Walk through the timeline: childhood, adolescence, adulthood. For each condition: when diagnosed, how it's managed now, current status. Surgeries, hospitalizations, major health events. If the user lists multiple conditions, explore connections between them.
+
+- **Family history** — This is not one question. Ask about each category of relative:
+  - Parents: conditions, age of onset, cause of death if applicable
+  - Siblings: conditions, current health
+  - Grandparents (both sides): conditions, cause of death if applicable
+  - Look for hereditary patterns: clustering of heart disease, cancer, diabetes, autoimmune conditions, mental health conditions across family members
+  - Ask about conditions they might not think to mention: high blood pressure, high cholesterol, thyroid issues, depression/anxiety, substance abuse
+  - If they say "I don't know much about my family history," accept that — note what's unknown and move on
+
+- **Current medications** — For each: name, dose, frequency, who prescribed, why, how long they've been on it. If multiple medications, note potential interactions to research later.
+
+- **Lifestyle** — Each dimension is its own question, not one compressed exchange:
+  - Exercise: type, frequency, intensity, how long they've been doing it
+  - Diet: general pattern, any restrictions or allergies, relationship with food
+  - Sleep: quality, duration, consistency, any issues (snoring, waking, insomnia)
+  - Stress: sources, how they manage it, how it affects them physically
+  - Substances: caffeine, alcohol, tobacco, cannabis, recreational — frequency and amount. No judgment in tone.
+
+- **Current providers** — Who they see, what role each plays, how often, how satisfied they are with each relationship
+
+#### Completion categories
+
+- **Recent labs or imaging** — if the platform supports filesystem access, offer to search their computer for lab PDFs
+- **Goals** — what they want from this, beyond any immediate concern
 
 Write data to the appropriate files as you go. Don't batch updates to the end. Each category maps to a specific data file per `guides/data-routing.md`. Timestamp when the intake is substantially complete.
 
@@ -92,9 +121,11 @@ Explain why it matters in plain language per `guides/data-backup.md`. Walk throu
 
 Walk through each tool individually per `guides/recommended-tools.md`. For each tool, explain what it does, why it helps, and offer to set it up now. Perplexity API first (most impactful), then sequential thinking MCP, then yt-dlp. Don't batch them into one message. Timestamp after each is offered (whether installed or deferred).
 
+When setting up the Perplexity API, disclose that research calls cost money: "Research uses the Perplexity API, which charges a small amount per search. Most health questions cost well under a dollar. Very thorough research on a complex topic might cost a few dollars. By setting up the API key, you're authorizing those charges." Keep it factual and brief. The API key setup is the cost consent.
+
 ### Step 8: Initial priorities set
 
-If not already set during Phase 1, review what was discussed and set priorities in `my-data/session-status.json`. Timestamp when done.
+If not already set during Phase 1, review what was discussed and set priorities in `my-data/status.json`. Timestamp when done.
 
 ## Completion
 
