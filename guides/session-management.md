@@ -14,7 +14,7 @@ Don't force it. If the user wants to continue, continue.
 
 Update files continuously throughout the conversation, not at the end:
 - Route data as it comes in per `guides/data-routing.md`
-- Update `my-data/session-status.json` whenever priorities, action items, or scheduled events change during conversation
+- Update `my-data/status.json` whenever priorities, action items, or scheduled events change during conversation
 - Document hypotheses as they're raised
 
 If the user stops mid-conversation, the files should already reflect everything discussed.

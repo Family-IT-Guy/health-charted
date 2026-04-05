@@ -10,6 +10,15 @@ Cited web research via the Perplexity Sonar API. Background sub-agents, primary 
 
 **When to surface:** On first research need. If the user asks to research a health topic and the research-engine plugin is not installed, pause and offer setup.
 
+**Prerequisites:** jq (JSON processor). Check if installed by running `jq --version`. If not installed, walk the user through installation before proceeding:
+
+- **macOS with Homebrew:** `brew install jq`
+- **macOS without Homebrew:** Download the binary from https://github.com/jqlang/jq/releases (choose the macOS Apple Silicon or Intel version), move it to `/usr/local/bin/jq`, and run `chmod +x /usr/local/bin/jq`
+- **Windows:** `winget install jqlang.jq` (winget is built into Windows 10/11)
+- **Linux:** `sudo apt install jq` (Debian/Ubuntu) or `sudo dnf install jq` (Fedora/RHEL)
+
+Detect the user's platform and offer the simplest option for their system. Walk through each step interactively. Verify with `jq --version` after installation.
+
 **Setup:**
 1. Add the plugin marketplace:
    ```
@@ -24,15 +33,11 @@ Cited web research via the Perplexity Sonar API. Background sub-agents, primary 
    ```
    echo "PERPLEXITY_API_KEY=pplx-your-key-here" > ~/.claude/research-engine.env
    ```
-5. Add permissions to `~/.claude/settings.json` under `permissions.allow`:
-   ```json
-   "Edit(/research/**)",
-   "Bash(*pplx-curl.sh*)",
-   "Bash(*yt-dlp*)"
-   ```
-6. Restart Claude Code
+5. Restart Claude Code
 
-Cost: pay-per-query. A typical research session costs a few dollars.
+Note: permissions for research file writes, git operations, and pplx-curl.sh are already included in this project's `.claude/settings.json`. No manual permission setup needed.
+
+Cost: research uses the Perplexity API, which charges a small amount per search. Most health questions cost well under a dollar. Very thorough research on a complex topic might cost a few dollars. By setting up the API key, you're authorizing those charges.
 
 ## Sequential Thinking MCP Server (optional)
 

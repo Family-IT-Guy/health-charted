@@ -36,18 +36,18 @@ When a recommendation may involve insurance friction:
 - Note what typically requires prior authorization for the relevant type of care
 - Suggest language that supports medical necessity ("diagnosis of X with documented symptoms of Y, standard treatment has been insufficient per [dates/data]")
 - Note alternatives if coverage is denied: cash pay pricing, alternative labs (direct-to-consumer lab services), different procedure codes, appeal processes
-- Record insurance interactions in `my-data/provider-log.json` for reference in future encounters
+- Record insurance interactions in `my-data/visit-notes.json` for reference in future encounters
 
 ## Processing Provider Interactions
 
 After a provider visit, when the user shares what happened (recording, transcript, notes, or verbal summary):
 
 1. **Extract clinically relevant information:** diagnoses discussed, labs ordered, medication changes, provider recommendations, referrals, follow-up plans.
-2. **Create a structured summary** in `my-data/provider-log.json`: date, provider, visit type, key topics, orders, medications, recommendations, follow-up timeline.
-3. **Route extracted data** to appropriate files per `guides/data-routing.md`: lab orders to session-status.json as pending items, medication changes to treatment-stack.json, etc.
+2. **Create a structured summary** in `my-data/visit-notes.json`: date, provider, visit type, key topics, orders, medications, recommendations, follow-up timeline.
+3. **Route extracted data** to appropriate files per `guides/data-routing.md`: lab orders to status.json as pending items, medication changes to treatments.json, etc.
 4. **Flag conflicts** between the provider's assessment and the system's current understanding. Present both sides with evidence. The user decides how to proceed.
 5. **Update hypotheses** if the provider interaction provided new data that validates or invalidates open hypotheses.
 
 ## Care Team Tracking
 
-The provider roster lives in `my-data/profile.json` (the providers array). Visit history lives in `my-data/provider-log.json`. Over time, the visit history reveals which providers are responsive to the user's needs and which are not. That pattern is useful information for the user's decision-making about their care team.
+The provider roster lives in `my-data/health-profile.json` (the providers array). Visit history lives in `my-data/visit-notes.json`. Over time, the visit history reveals which providers are responsive to the user's needs and which are not. That pattern is useful information for the user's decision-making about their care team.

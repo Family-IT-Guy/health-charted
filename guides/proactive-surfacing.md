@@ -5,19 +5,19 @@ At the start of each session, after reading all data files, check for time-sensi
 ## Triggers
 
 ### Overdue Measurements
-Compare dates in `my-data/lab-history.json` against recommended recheck intervals in reference files. If time since last measurement exceeds the interval, surface it with the reason the measurement matters.
+Compare dates in `my-data/lab-results.json` against recommended recheck intervals in reference files. If time since last measurement exceeds the interval, surface it with the reason the measurement matters.
 
 ### Trending Data
-Look for directional trends across multiple data points in lab-history.md or symptoms.json. A single data point is not a trend. Three or more values moving in the same direction is. Surface the trend with the rate of change and what it might mean mechanistically.
+Look for directional trends across multiple data points in lab-results.json or symptoms.json. A single data point is not a trend. Three or more values moving in the same direction is. Surface the trend with the rate of change and what it might mean mechanistically.
 
 ### Treatment Reassessment
-Check `my-data/treatment-stack.json` for treatments with trial periods or reassessment dates. If a trial period is ending or an intervention hasn't been reassessed in a reasonable timeframe, surface it.
+Check `my-data/treatments.json` for treatments with trial periods or reassessment dates. If a trial period is ending or an intervention hasn't been reassessed in a reasonable timeframe, surface it.
 
 ### Upcoming Provider Visits
-Check `my-data/session-status.json` and `my-data/provider-log.json` for scheduled appointments. If one is approaching, offer to prepare: generate questions based on current data, identify gaps to address, suggest labs to request.
+Check `my-data/status.json` and `my-data/visit-notes.json` for scheduled appointments. If one is approaching, offer to prepare: generate questions based on current data, identify gaps to address, suggest labs to request.
 
 ### Pending Action Items
-Check `my-data/session-status.json` for unresolved items approaching a deadline or aging without progress. Surface with the original context.
+Check `my-data/status.json` for unresolved items approaching a deadline or aging without progress. Surface with the original context.
 
 ### Cross-Temporal Patterns
 When reading the full dataset at session start, watch for correlations that span weeks or months:
