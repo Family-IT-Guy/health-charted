@@ -88,6 +88,48 @@ When routing data to a file, always check for connections to other files:
 
 These cross-references are where the system adds value beyond simple record-keeping. A human tracking their health in a notebook captures data. This system captures data AND surfaces connections.
 
+## Propagation Flagging
+
+When my-data/ changes, the change may invalidate interpretations in reference files. Use the entity index to identify affected reference files and flag them for review.
+
+### After every my-data/ write:
+
+1. **Identify entities affected.** What condition, medication, lab marker, or symptom was updated?
+2. **Search reference/INDEX.json** for files whose `entities` include the affected entity names.
+3. **For each affected reference file**, check whether the change is meaningful:
+   - New lab result for a tracked marker: meaningful (may change interpretation)
+   - Medication dose change: meaningful (may affect monitoring schedule)
+   - New symptom entry with same severity as previous: not meaningful (no interpretation change)
+4. **For meaningful changes**, add a flag to `my-data/status.json` in `pending_reference_updates`:
+
+   ```json
+   {
+     "file": "iron-management.md",
+     "reason": "New ferritin result (Sep 2026) may change iron status interpretation",
+     "triggered_by": "my-data/lab-results.json",
+     "date_flagged": "2026-09-15"
+   }
+   ```
+
+5. **Surface the flag conversationally**: "Your new ferritin result may change the assessment in your iron management reference. Want me to update it now?"
+6. **If user approves**: read the reference file, follow pointers to get current data, update the interpretation and narrative sections, update `last_interpretation_update` in reference/INDEX.json. Remove the flag from status.json.
+7. **If user defers**: the flag persists in status.json and surfaces again at the next session start (via proactive surfacing).
+
+### After research/ changes:
+
+Same process but triggered by research updates instead of my-data/ changes:
+
+1. Identify entities in the new or updated research file.
+2. Search reference/INDEX.json for files whose `derived_from.research` includes the changed file, OR whose `entities` overlap with the research file's entities.
+3. Flag affected reference files in status.json.
+4. Surface and update with user approval.
+
+### What propagation is NOT:
+
+- Propagation does not auto-rewrite reference files. Every interpretation update happens in conversation with the user.
+- Propagation does not modify my-data/ or research/ files. Data flows down (into reference/), never up.
+- Propagation does not create new reference files. It only flags existing ones for review.
+
 ## Hypothesis Linkage
 
 When data routing reveals a pattern or raises a question, document it as a hypothesis in the relevant data file:
