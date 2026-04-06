@@ -69,6 +69,25 @@ For each approved domain:
 2. For deep dives: verify primary sources. Read the actual studies, not just summaries. Check methodology, sample size, funding, and whether conclusions follow from data.
 3. Write findings to `research/[NN-domain-name].md` with numbered file names for reading order.
 4. Apply epistemic discipline from `guides/epistemic-discipline.md`: trace mechanisms, evaluate evidence quality, note institutional positions vs data, flag gaps honestly.
+5. Extract entities from the research and add to the file's YAML frontmatter:
+
+   ```yaml
+   ---
+   date_created: 2026-04-05
+   review_by: 2027-04-05
+   topic: Iron metabolism and absorption
+   entities:
+     conditions: [iron-deficiency, anemia]
+     lab_markers: [ferritin, transferrin-sat, hemoglobin, serum-iron, TIBC]
+     medications: [ferrous-bisglycinate, ferrous-sulfate]
+     mechanisms: [hepcidin-regulation, calcium-iron-competition, vitamin-c-enhancement]
+     interactions: [calcium-iron, vitamin-c-iron, ppi-iron]
+   ---
+   ```
+
+   Use canonical names from the naming discipline (data-routing.md). Entity types: conditions, lab_markers, medications, mechanisms, interactions, symptoms, providers. Add other types as needed.
+
+6. Update `research/INDEX.json` with the file entry including the same entities.
 
 ### Phase 3: Identify gaps and cascade
 
@@ -80,19 +99,76 @@ After completing the planned domains, assess what's missing:
 
 Present gaps to the user. If they want to pursue them, research those as additional threads.
 
+### Updating Existing Research
+
+Research files are not write-once artifacts. When new evidence arrives (new studies, review_by triggered, user brings new information), update the existing research file rather than creating a new one.
+
+**When to update vs create new:**
+- **Update** when the new information covers the same domain as an existing file (new study on iron absorption goes into the existing iron metabolism file).
+- **Create new** when the topic is genuinely new (a condition not previously researched, a domain not covered by any existing file).
+
+**Update procedure:**
+1. Read the existing research file in full.
+2. Add new findings as a new section or integrate into existing sections.
+3. If new findings contradict existing content, note the contradiction explicitly with dates and evidence quality for both the old and new claims. Do not silently replace.
+4. Update the YAML frontmatter: revise `review_by`, add new entities if the update covers entities not previously listed.
+5. Update `research/INDEX.json` entities to reflect the new coverage.
+6. Check entity index: are there reference files that cite this research file? If so, flag them for interpretation review (see data-routing.md, Propagation Flagging section).
+
 ### Phase 4: Synthesize into reference
 
-Distill the research files into compact reference files in `reference/`:
+Distill the research files into reference files in `reference/`. Reference files are the interpretation layer. They contain pointers and analysis, never copies of raw data or evidence.
 
-- Each reference file should be scannable and actionable (tables, ranges, decision aids)
-- Each entry cites back to the specific research file and section for full evidence
-- Focus on what the system needs during regular interactions (optimal ranges, treatment profiles, measurement schedules)
+#### Reference file format
+
+Each section in a reference file follows this structure:
+
+```markdown
+## [Topic]
+
+**Sources:**
+- Data: my-data/[file].json ([which entries])
+- Evidence: research/[file].md ([which sections])
+
+**Interpretation:**
+[What the current data means in context of the evidence.
+This is the only original content in the section.
+Do not copy values from my-data/ or findings from research/.
+State what the combination means for this person.]
+
+**Narrative:**
+[Chronological story of how this has evolved. Each entry is
+a dated observation referencing the source data, not a copy.
+Append new entries. Never modify old entries.]
+- YYYY-MM: [what happened, referencing source]
+- YYYY-MM: [what happened, referencing source]
+
+**Next action:**
+[What to do and when. Recheck dates, protocol adjustments,
+provider discussion points.]
+
+**Cross-references:**
+- [Related topic]: see [other-reference-file.md]
+```
+
+#### Why pointers, not copies
+
+If a reference file says "ferritin: 18 ng/mL," that value exists in two places. When lab-results.json updates, the reference is stale until manually propagated. With pointers, the reference says "marker: ferritin, source: my-data/lab-results.json." The LLM follows the pointer to get the current value. The interpretation may be stale, but the facts the LLM reads through pointers are always current.
+
+#### Reference INDEX entry
+
+When creating a reference file, add its entry to `reference/INDEX.json` including:
+- `entities`: canonical entity names covered
+- `derived_from`: which my-data/ and research/ files it draws from
+- `last_interpretation_update`: today's date
+
+The `derived_from` field is provenance. It tells the propagation system which source changes affect which reference files.
 
 ### Phase 5: Update indices
 
-After creating files, update:
-- `research/INDEX.json` — file name, contents summary, when to reference it
-- `reference/INDEX.json` — file name, contents summary, when to reference it
+After creating or updating files, update:
+- `research/INDEX.json` — file name, contents summary, when to reference it, entities covered
+- `reference/INDEX.json` — file name, contents summary, when to reference it, entities covered, derived_from, last_interpretation_update
 
 ## Research Quality Standards
 
