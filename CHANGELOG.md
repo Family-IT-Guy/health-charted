@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.0 — 2026-04-06
+
+### Documentation
+
+- Rewrote README for non-technical users. Written for the person actually using the system, not developers.
+- Added ARCHITECTURE.md for contributors and technical users. Organized by design objectives (durability, integrity, compounding, extensibility, user experience) with rationale for decisions made and alternatives rejected.
+- Added ARCHITECTURE.md to MANIFEST.
+
 ## 1.3.0 — 2026-04-06
 
 ### Automatic updates
