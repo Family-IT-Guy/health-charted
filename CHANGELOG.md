@@ -1,5 +1,34 @@
 # Changelog
 
+## 1.2.0 — 2026-04-06
+
+### Knowledge layer: entity-aware compounding
+
+The knowledge layer (reference/ and research/) now supports entity awareness, pointer-based references, change propagation, and gap detection. These changes make the system's understanding compound over time instead of being frozen at creation.
+
+**Entity index**
+- Research and reference INDEX schemas now include an `entities` field listing canonical entity names (conditions, medications, lab markers, mechanisms, interactions, symptoms, providers) covered by each file
+- Research files include entities in YAML frontmatter alongside existing date_created, review_by, and topic fields
+- Reference INDEX entries include `derived_from` (provenance) and `last_interpretation_update` fields
+
+**Pointer+interpretation references**
+- Reference files store pointers to source data and evidence, plus interpretations and narrative. Never copies of raw values.
+- Format documented in research-guide.md Phase 4
+- Interpretations are verifiable: the LLM follows pointers to check current data against recorded interpretation
+
+**Propagation flagging**
+- When my-data/ changes, the entity index identifies affected reference files
+- Affected files are flagged in status.json (pending_reference_updates) for conversational review
+- Flags persist across sessions until resolved
+- Research changes trigger the same flagging process
+
+**Gap detection**
+- Proactive surfacing now checks entity coverage: active conditions and medications without research are surfaced as gaps
+- Pending reference updates surface at session start with reason and date
+
+**Status schema**
+- Added pending_reference_updates array to status.json for propagation flag persistence
+
 ## 1.1.0 — 2026-04-04
 
 ### UX improvements (based on beta tester feedback)
