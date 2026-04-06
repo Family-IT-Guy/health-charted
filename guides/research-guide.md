@@ -74,7 +74,6 @@ For each approved domain:
    ```yaml
    ---
    date_created: 2026-04-05
-   review_by: 2027-04-05
    topic: Iron metabolism and absorption
    entities:
      conditions: [iron-deficiency, anemia]
@@ -101,7 +100,7 @@ Present gaps to the user. If they want to pursue them, research those as additio
 
 ### Updating Existing Research
 
-Research files are not write-once artifacts. When new evidence arrives (new studies, review_by triggered, user brings new information), update the existing research file rather than creating a new one.
+Research files are not write-once artifacts. When new evidence arrives (new studies, user brings new information, propagation flag triggers review), update the existing research file rather than creating a new one.
 
 **When to update vs create new:**
 - **Update** when the new information covers the same domain as an existing file (new study on iron absorption goes into the existing iron metabolism file).
@@ -111,7 +110,7 @@ Research files are not write-once artifacts. When new evidence arrives (new stud
 1. Read the existing research file in full.
 2. Add new findings as a new section or integrate into existing sections.
 3. If new findings contradict existing content, note the contradiction explicitly with dates and evidence quality for both the old and new claims. Do not silently replace.
-4. Update the YAML frontmatter: revise `review_by`, add new entities if the update covers entities not previously listed.
+4. Update the YAML frontmatter: add new entities if the update covers entities not previously listed.
 5. Update `research/INDEX.json` entities to reflect the new coverage.
 6. Check entity index: are there reference files that cite this research file? If so, flag them for interpretation review (see data-routing.md, Propagation Flagging section).
 
@@ -159,16 +158,14 @@ If a reference file says "ferritin: 18 ng/mL," that value exists in two places. 
 
 When creating a reference file, add its entry to `reference/INDEX.json` including:
 - `entities`: canonical entity names covered
-- `derived_from`: which my-data/ and research/ files it draws from
-- `last_interpretation_update`: today's date
 
-The `derived_from` field is provenance. It tells the propagation system which source changes affect which reference files.
+Provenance (which source files the reference draws from) lives in the **Sources** section of the reference file body, not in the INDEX. The entity index handles propagation lookup.
 
 ### Phase 5: Update indices
 
 After creating or updating files, update:
 - `research/INDEX.json` — file name, contents summary, when to reference it, entities covered
-- `reference/INDEX.json` — file name, contents summary, when to reference it, entities covered, derived_from, last_interpretation_update
+- `reference/INDEX.json` — file name, contents summary, when to reference it, entities covered
 
 ## Research Quality Standards
 
@@ -191,21 +188,20 @@ The knowledge base is not static. As the user's situation evolves:
 
 When the system identifies a knowledge gap during normal interaction, suggest targeted research to fill it. Use this guide for the approach.
 
-## Research Age
+## Research Frontmatter
 
-Every research file must include YAML frontmatter with aging metadata:
+Every research file must include YAML frontmatter:
 
 ```
 ---
 date_created: 2026-04-02
-review_by: 2027-04-02
 topic: Dupuytren's contracture treatment mechanisms
+entities:
+  conditions: [dupuytren-contracture]
+  mechanisms: [myofibroblast-proliferation, palmar-fibromatosis]
+  medications: [collagenase-clostridium, xiaflex]
+  lab_markers: []
 ---
 ```
 
-Set `review_by` based on how fast the field moves:
-- Active research areas (emerging treatments, AI in medicine): 6 months
-- Established but evolving (nutrition science, drug interactions): 12 months
-- Well-established mechanisms (basic biochemistry, anatomy): 24 months
-
-The user can override these defaults per file. The proactive surfacing system checks `review_by` dates at session start and flags overdue research for review.
+`date_created` records when the research was written. It's a fact, not a trigger. Research staleness is detected through entity-based propagation (new data or evidence arrives for the same entities), not through calendar dates.

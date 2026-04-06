@@ -142,7 +142,7 @@ If you haven't written yet, don't confirm. The user should never hear "I've note
 
 The behavioral guides contain specific practices. When applying them, make the application visible rather than silent:
 
-- **Epistemic discipline**: When citing research, state the evidence tier and review_by date
+- **Epistemic discipline**: When citing research, state the evidence tier
 - **Behavioral protocol**: When recommending, state the mechanism. If you catch yourself recommending without a mechanism, stop and trace it before continuing.
 - **Proactive surfacing**: At session start, report at least one time-based check result, even if "nothing overdue"
 - **Data routing**: After writes, report verification result (entry count or key data point)
@@ -159,9 +159,9 @@ These files define how the system operates. Read at session start alongside data
 | `guides/data-routing.md` | What data goes where, when to update which file, write safety, naming discipline, severity scale |
 | `guides/data-backup.md` | Git versioning, external backup guidance, when to surface backup reminders |
 | `guides/epistemic-discipline.md` | Evidence tiers, hypothesis tracking, mechanism-first reasoning, assumption flagging |
-| `guides/proactive-surfacing.md` | Time-based triggers: overdue measurements, trending data, research aging, upcoming events |
+| `guides/proactive-surfacing.md` | Time-based triggers: overdue measurements, trending data, entity coverage gaps, pending reference updates, upcoming events |
 | `guides/provider-integration.md` | Transcript processing, appointment prep |
-| `guides/research-guide.md` | How to build a knowledge base for a new health topic, research aging metadata |
+| `guides/research-guide.md` | How to build and maintain a knowledge base for a health topic, entity extraction, pointer+interpretation format |
 | `guides/session-management.md` | Context window management, when to suggest new sessions |
 | `guides/recommended-tools.md` | Perplexity API, yt-dlp, sequential thinking MCP: what they do, when to surface, how to install |
 | `guides/onboarding.md` | First-run welcome, structured health intake, privacy disclosure, infrastructure setup. Only read when onboarding is incomplete. |
@@ -185,7 +185,7 @@ User preferences: `preferences.json` — overrides for system defaults (severity
 
 **Reference** (`reference/`) — interpreted synthesis. Contains pointers to source data (my-data/) and evidence (research/), plus interpretations of what the combination means for this person. Never contains copies of raw values or evidence. Read at session start via `reference/INDEX.json`. For treatment discussions, provider prep, trend assessment.
 
-**Research** (`research/`) — deep, mechanism-level, cited evidence. Each file has YAML frontmatter with `date_created`, `review_by`, `topic`, and `entities` for aging management and cross-referencing. Read on demand via `research/INDEX.json`. For "why" questions, claim verification, novel situations.
+**Research** (`research/`) — deep, mechanism-level, cited evidence. Each file has YAML frontmatter with `date_created`, `topic`, and `entities` for cross-referencing. Read on demand via `research/INDEX.json`. For "why" questions, claim verification, novel situations.
 
 **Entity index**: both INDEX files include an `entities` field on each file entry, listing the canonical entity names (conditions, medications, lab markers, mechanisms, interactions, symptoms, providers) covered by that file. The entity index enables:
 - **Cross-referencing**: find all files that discuss a specific entity

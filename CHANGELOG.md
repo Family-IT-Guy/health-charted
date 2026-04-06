@@ -8,8 +8,8 @@ The knowledge layer (reference/ and research/) now supports entity awareness, po
 
 **Entity index**
 - Research and reference INDEX schemas now include an `entities` field listing canonical entity names (conditions, medications, lab markers, mechanisms, interactions, symptoms, providers) covered by each file
-- Research files include entities in YAML frontmatter alongside existing date_created, review_by, and topic fields
-- Reference INDEX entries include `derived_from` (provenance) and `last_interpretation_update` fields
+- Research files include entities in YAML frontmatter alongside existing date_created and topic fields
+- Removed review_by from research frontmatter (staleness is event-driven via propagation, not calendar-driven)
 
 **Pointer+interpretation references**
 - Reference files store pointers to source data and evidence, plus interpretations and narrative. Never copies of raw values.
