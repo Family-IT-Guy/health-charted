@@ -32,6 +32,31 @@ Check research files in `research/` for YAML frontmatter containing `review_by` 
 
 If the user wants to update, run a targeted research refresh per `guides/research-guide.md`. If they defer, update the `review_by` date in the frontmatter to a new date agreed with the user.
 
+### Entity Coverage Gaps
+
+Compare entities in my-data/ against entity coverage in both INDEX files. Surface gaps where the person has active conditions, medications, or lab markers with no corresponding research or reference coverage.
+
+**Check procedure:**
+1. Read active conditions from my-data/health-profile.json.
+2. Read active medications and supplements from my-data/treatments.json.
+3. Read the entity fields from both research/INDEX.json and reference/INDEX.json.
+4. For each active condition and medication, check whether it appears in any research file's entities. If not, it's a research gap.
+5. For each active condition and medication, check whether it appears in any reference file's entities. If not, it's a reference gap (interpretation gap).
+
+**Surfacing format:**
+- Research gaps: "You're taking [medication] for [condition], but we don't have any research on file for [the gap]. [If interaction risk exists, mention it.] Want me to research this?"
+- Reference gaps (when research exists but no reference): "We have research on [topic] but no reference summary. Want me to create one?"
+
+**Prioritize by risk:** medications with known interaction profiles and conditions central to the user's health goals surface first. Supplements with low interaction risk surface last.
+
+### Pending Reference Updates
+
+Check `my-data/status.json` for entries in `pending_reference_updates`. These are reference files flagged for interpretation review because their source data changed.
+
+Surface each pending update with its reason and date flagged. Older flags surface first (longest time since flagged). Group flags for the same reference file.
+
+Format: "[Reference topic] was flagged for review on [date] because [reason]. Want me to update it?"
+
 ### Stale Hypotheses
 Check data files for hypotheses marked "open" or "untested" that haven't been revisited. If a hypothesis has been open for an extended period without new data, surface it: "We have an open hypothesis from [date] about [topic]. Should we investigate, or has the situation changed?"
 
