@@ -83,7 +83,7 @@ At the start of every session, read in this order. **Read every file in its enti
 
 Then read the behavioral guides listed below.
 
-Check for updates: read the local `VERSION` file, then try to fetch `https://raw.githubusercontent.com/Family-IT-Guy/health-charted/main/VERSION`. If the remote version is newer, inform the user that an update is available. If the fetch fails, skip silently.
+Check for updates: read the local `VERSION` file, then try to fetch `https://raw.githubusercontent.com/Family-IT-Guy/health-charted/main/VERSION`. If the remote version is newer, follow `guides/update.md` to offer and perform the update. If the fetch fails, skip silently.
 
 ### Onboarding Check
 
@@ -164,6 +164,7 @@ These files define how the system operates. Read at session start alongside data
 | `guides/research-guide.md` | How to build and maintain a knowledge base for a health topic, entity extraction, pointer+interpretation format |
 | `guides/session-management.md` | Context window management, when to suggest new sessions |
 | `guides/recommended-tools.md` | Perplexity API, yt-dlp, sequential thinking MCP: what they do, when to surface, how to install |
+| `guides/update.md` | How to detect, offer, and perform system updates. Grandma-proof: no technical language. |
 | `guides/onboarding.md` | First-run welcome, structured health intake, privacy disclosure, infrastructure setup. Only read when onboarding is incomplete. |
 
 ## Data Files

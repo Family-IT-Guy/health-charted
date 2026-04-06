@@ -1,0 +1,33 @@
+# Health Charted system files
+# Listed files are replaced during updates.
+# Files NOT listed here are personal data and are never overwritten.
+CLAUDE.md
+CHANGELOG.md
+VERSION
+README.md
+LICENSE
+MANIFEST
+.gitignore
+.claude/settings.json
+guides/behavioral-protocol.md
+guides/data-backup.md
+guides/data-routing.md
+guides/epistemic-discipline.md
+guides/onboarding.md
+guides/proactive-surfacing.md
+guides/provider-integration.md
+guides/recommended-tools.md
+guides/research-guide.md
+guides/session-management.md
+guides/update.md
+schemas/decisions.schema.json
+schemas/health-profile.schema.json
+schemas/lab-results.schema.json
+schemas/lifestyle.schema.json
+schemas/preferences.schema.json
+schemas/reference-index.schema.json
+schemas/research-index.schema.json
+schemas/status.schema.json
+schemas/symptoms.schema.json
+schemas/treatments.schema.json
+schemas/visit-notes.schema.json
