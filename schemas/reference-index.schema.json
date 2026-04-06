@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "health-charted/reference-index",
   "title": "Health Charted Reference Index",
-  "description": "Index of reference files with entity coverage and provenance tracking.",
+  "description": "Index of reference files with entity coverage for cross-referencing and gap detection.",
   "type": "object",
   "properties": {
     "_type": {
@@ -25,26 +25,6 @@
               "type": "array",
               "items": { "type": "string" }
             }
-          },
-          "derived_from": {
-            "type": "object",
-            "description": "Provenance: which source files this reference is built from.",
-            "properties": {
-              "my_data": {
-                "type": "array",
-                "description": "my-data/ files this reference draws facts from.",
-                "items": { "type": "string" }
-              },
-              "research": {
-                "type": "array",
-                "description": "research/ files this reference draws evidence from.",
-                "items": { "type": "string" }
-              }
-            }
-          },
-          "last_interpretation_update": {
-            "type": ["string", "null"],
-            "description": "ISO date when the interpretation in this reference was last verified against current data."
           }
         }
       }

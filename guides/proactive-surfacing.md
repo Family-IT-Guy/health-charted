@@ -27,11 +27,6 @@ When reading the full dataset at session start, watch for correlations that span
 
 Surface these as observations, not conclusions. "I notice X correlates with Y over the past 3 months. Worth investigating?"
 
-### Research Aging
-Check research files in `research/` for YAML frontmatter containing `review_by` dates. If a research file's `review_by` date has passed, surface it: "Your research on [topic] was created on [date_created] and is due for review. Medical knowledge in this area may have evolved. Want to check for updates?"
-
-If the user wants to update, run a targeted research refresh per `guides/research-guide.md`. If they defer, update the `review_by` date in the frontmatter to a new date agreed with the user.
-
 ### Entity Coverage Gaps
 
 Compare entities in my-data/ against entity coverage in both INDEX files. Surface gaps where the person has active conditions, medications, or lab markers with no corresponding research or reference coverage.

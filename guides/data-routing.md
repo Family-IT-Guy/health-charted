@@ -112,7 +112,7 @@ When my-data/ changes, the change may invalidate interpretations in reference fi
    ```
 
 5. **Surface the flag conversationally**: "Your new ferritin result may change the assessment in your iron management reference. Want me to update it now?"
-6. **If user approves**: read the reference file, follow pointers to get current data, update the interpretation and narrative sections, update `last_interpretation_update` in reference/INDEX.json. Remove the flag from status.json.
+6. **If user approves**: read the reference file, follow pointers to get current data, update the interpretation and narrative sections. Remove the flag from status.json.
 7. **If user defers**: the flag persists in status.json and surfaces again at the next session start (via proactive surfacing).
 
 ### After research/ changes:
@@ -120,7 +120,7 @@ When my-data/ changes, the change may invalidate interpretations in reference fi
 Same process but triggered by research updates instead of my-data/ changes:
 
 1. Identify entities in the new or updated research file.
-2. Search reference/INDEX.json for files whose `derived_from.research` includes the changed file, OR whose `entities` overlap with the research file's entities.
+2. Search reference/INDEX.json for files whose `entities` overlap with the research file's entities.
 3. Flag affected reference files in status.json.
 4. Surface and update with user approval.
 
