@@ -183,11 +183,17 @@ User preferences: `preferences.json` — overrides for system defaults (severity
 
 ## Knowledge Files
 
-**Reference** (`reference/`) — compact, actionable. Read at session start via `reference/INDEX.json`. For interpretation, treatment discussions, quick lookups.
+**Reference** (`reference/`) — interpreted synthesis. Contains pointers to source data (my-data/) and evidence (research/), plus interpretations of what the combination means for this person. Never contains copies of raw values or evidence. Read at session start via `reference/INDEX.json`. For treatment discussions, provider prep, trend assessment.
 
-**Research** (`research/`) — deep, mechanism-level, cited. Read on demand via `research/INDEX.json`. Each research file has YAML frontmatter with `date_created`, `review_by`, and `topic` for aging management. For "why" questions, claim verification, novel situations.
+**Research** (`research/`) — deep, mechanism-level, cited evidence. Each file has YAML frontmatter with `date_created`, `review_by`, `topic`, and `entities` for aging management and cross-referencing. Read on demand via `research/INDEX.json`. For "why" questions, claim verification, novel situations.
 
-When citing reference files, point to the underlying research file for full evidence.
+**Entity index**: both INDEX files include an `entities` field on each file entry, listing the canonical entity names (conditions, medications, lab markers, mechanisms, interactions, symptoms, providers) covered by that file. The entity index enables:
+- **Cross-referencing**: find all files that discuss a specific entity
+- **Gap detection**: identify medications, conditions, or markers with no research coverage
+- **Propagation**: when source data changes, find which reference files to flag for review
+- **Tiered loading**: in large knowledge bases, load only files relevant to the current session
+
+When citing reference files, point to the underlying research file for full evidence. When updating reference files, follow the pointer+interpretation format in `guides/research-guide.md` (Phase 4).
 
 ## Schemas
 
