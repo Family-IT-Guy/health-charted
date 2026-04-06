@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "health-charted/research-index",
   "title": "Health Charted Research Index",
-  "description": "Index of deep research files. Aging metadata lives in each research file's frontmatter, not here.",
+  "description": "Index of deep research files with entity coverage for cross-referencing and gap detection.",
   "type": "object",
   "properties": {
     "_type": {
@@ -17,7 +17,15 @@
           "file": { "type": "string", "description": "Filename relative to research/" },
           "topic": { "type": "string" },
           "summary": { "type": "string" },
-          "when_to_reference": { "type": "string", "description": "When this file is useful during a session" }
+          "when_to_reference": { "type": "string", "description": "When this file is useful during a session" },
+          "entities": {
+            "type": "object",
+            "description": "Canonical entity names covered by this file, keyed by entity type. Used for cross-referencing, propagation, and gap detection.",
+            "additionalProperties": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
         }
       }
     }
