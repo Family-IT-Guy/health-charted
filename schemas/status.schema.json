@@ -46,6 +46,19 @@
         }
       }
     },
+    "pending_reference_updates": {
+      "type": "array",
+      "description": "Reference files flagged for interpretation review after source data changed. Persists across sessions until resolved.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": { "type": "string", "description": "Reference file path relative to reference/" },
+          "reason": { "type": "string", "description": "What changed that may affect the interpretation" },
+          "triggered_by": { "type": "string", "description": "Which source file change triggered this flag" },
+          "date_flagged": { "type": "string", "description": "ISO date when flagged" }
+        }
+      }
+    },
     "onboarding": {
       "type": ["object", "null"],
       "description": "Onboarding progress tracker. Null before first run. Populated by LLM on first session.",
