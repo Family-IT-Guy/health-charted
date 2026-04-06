@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.0 — 2026-04-06
+
+### Automatic updates
+
+The system now detects when a newer version is available and offers to update with a single yes/no confirmation. Updates back up your data first, replace only system files (guides, schemas, configuration), and never touch personal health data. If anything goes wrong, the system restores automatically.
+
+- Added MANIFEST file listing all system files (the allowlist for updates)
+- Added guides/update.md with the full update procedure
+- Updated session initialization to offer updates instead of just informing
+
 ## 1.2.0 — 2026-04-06
 
 ### Knowledge layer: entity-aware compounding
