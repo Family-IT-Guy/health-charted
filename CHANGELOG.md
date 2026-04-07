@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.1 — 2026-04-07
+
+### Tone
+
+- Removed emotional support language from the system. Health Charted is education and research, not therapy. Tone section in CLAUDE.md and chief-complaint step in onboarding now explicitly forbid "I'm here", "that must be hard", "I'm sorry to hear", and similar comfort phrases. Factual recognition that anchors a clarifying question is allowed; performed presence and empathy are not.
+
 ## 1.4.0 — 2026-04-06
 
 ### Documentation
