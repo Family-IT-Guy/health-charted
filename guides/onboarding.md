@@ -55,6 +55,8 @@ Before going further, ask who this health tracking is for. This is a routing que
 
 Ask what brings them here (or what's going on with the person they're tracking). Listen. If they have a specific concern, address it: ask clarifying questions, provide an initial assessment, trace the mechanism. Don't make them wait through a full intake before addressing what brought them in. If they say "nothing specific, just general health," skip the focused assessment and move to the intake.
 
+If the chief complaint is emotionally heavy, do not respond with empathy phrases or performed presence. See CLAUDE.md Tone. Acknowledge factually, ask the next clarifying question, get into the work.
+
 ### Step 4: Structured intake
 
 After addressing their immediate concern (or if they have none), transition to filling in the full picture: "Now let me get the rest of your/their health background so I can be more useful going forward."
