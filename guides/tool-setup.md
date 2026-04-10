@@ -45,14 +45,42 @@ Post-install: user must restart Claude Desktop (quit + reopen) for the plugin to
 
 ## Playwright CLI
 
-**What it is:** Enables the research engine to read JavaScript-rendered web pages (modern medical journals, ResearchGate, etc.).
+**What it is:** Enables the research engine to read modern web pages that require JavaScript to display their content (medical journals, research databases, etc.).
 
-**Why it's needed:** Many primary sources render content with JavaScript. Without this, the research engine can only read static HTML pages, silently degrading research quality.
+**Why it's needed:** Many primary sources render content with JavaScript. Without this, the research engine can only read simple web pages, silently missing content from modern sites.
 
-**Marketplace:** TBD (verify before first install -- check ~/.claude/plugins/marketplaces/ for the correct marketplace name)
+**Detection:** `command -v playwright-cli`
 
-**Plugin name:** TBD (verify before first install)
+**Install procedure:**
 
-**Install procedure:** NOT YET VALIDATED. Do not attempt until validated on a real surface. Validation is tracked in the N5 implementation plan (docs/plans/2026-04-07-research-engine-html-fetch-fix.md, Task 13).
+CLI tool:
+- macOS: `brew install playwright-cli`
+- Cross-platform: `npm install -g @playwright/cli`
 
-**Verification:** TBD after validation.
+Browser (required after CLI install):
+- `playwright-cli install-browser firefox`
+
+Skill (teaches Claude how to use the tool):
+- Clone https://github.com/microsoft/playwright-cli
+- Copy `skills/playwright-cli/` to `~/.claude/skills/playwright-cli/`
+
+**Verification:** `playwright-cli --version` succeeds AND `ls ~/.claude/skills/playwright-cli/SKILL.md` exists
+
+**Windows:** Documented but not tested. npm install path should work. Flag as unvalidated.
+
+---
+
+## jq
+
+**What it is:** JSON processor used by the research engine for cache index operations.
+
+**Why it's needed:** The research engine caches fetched web pages to avoid re-downloading. jq manages the cache index.
+
+**Detection:** `command -v jq`
+
+**Install procedure:**
+- macOS: `brew install jq`
+- Linux: `apt install jq` or `yum install jq`
+- Windows: `choco install jq` or `scoop install jq`
+
+**Verification:** `jq --version`

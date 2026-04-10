@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.5.1 — 2026-04-10
+
+### Research quality
+
+- Updated tool setup playbook with validated playwright-cli install procedures (CLI tool, Firefox browser, Claude Code skill). Enables the research engine to read JavaScript-rendered primary sources like medical journals and research databases.
+- Added jq install procedures to tool setup playbook (cache index dependency).
+- Added .playwright-cli/ to .gitignore (browser automation artifacts).
+
 ## 1.5.0 — 2026-04-10
 
 ### Grandma-proof audit (from real user session)
