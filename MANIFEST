@@ -10,7 +10,13 @@ LICENSE
 MANIFEST
 .gitignore
 .claude/settings.json
+.claude/rules/tone.md
+.claude/rules/presentation.md
+.claude/rules/document-writes.md
+.claude/rules/api-key-setup.md
+.claude/rules/verify-external-tools.md
 guides/behavioral-protocol.md
+guides/tool-setup.md
 guides/data-backup.md
 guides/data-routing.md
 guides/epistemic-discipline.md
