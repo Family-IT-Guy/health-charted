@@ -1,22 +1,22 @@
 {
   "permissions": {
     "allow": [
-      "Edit(my-data/**)",
-      "Edit(preferences.json)",
-      "Edit(reference/**)",
-      "Edit(research/**)",
-      "Write(my-data/**)",
-      "Write(preferences.json)",
-      "Write(reference/**)",
-      "Write(research/**)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git init:*)",
-      "Bash(git diff:*)",
-      "Bash(git log:*)",
-      "Bash(git status:*)",
-      "Bash(git rev-parse:*)",
-      "Bash(*pplx-curl.sh*)"
+      "Bash",
+      "Read",
+      "Write",
+      "Edit",
+      "WebFetch"
     ]
+  },
+  "extraKnownMarketplaces": {
+    "familyitguy": {
+      "source": {
+        "source": "github",
+        "repo": "Family-IT-Guy/plugins"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "research-engine@familyitguy": true
   }
 }

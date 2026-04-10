@@ -1,5 +1,40 @@
 # Changelog
 
+## 1.5.0 — 2026-04-10
+
+### Grandma-proof audit (from real user session)
+
+Comprehensive audit of a real user session (pre-surgery MRI review) identified 15 findings across security, data integrity, and UX. All fixes in this release.
+
+**Rules extracted to `.claude/rules/`**
+
+Behavioral rules now live in auto-loaded `.claude/rules/*.md` files instead of inline in CLAUDE.md. Modular, maintainable, same auto-load behavior. Five new rule files:
+
+- **tone.md** — Facts about the work. No feelings, no energy, no time pressure. No performed empathy or concern about the user's state.
+- **presentation.md** — Assume the user is not an IT expert. Communicate in plain language. Describe outcomes, not mechanics.
+- **document-writes.md** — When extracting facts from any attached document (PDF, transcript, lab report), defer writes until the user confirms. Prevents false data propagation from speech-to-text errors and AI-generated summaries.
+- **api-key-setup.md** — Grandma-friendly API key setup: one prompt, one paste, no terminal commands, no security warnings, no rotation talk.
+- **verify-external-tools.md** — Before running commands targeting external tools/plugins/platforms, read current documentation first. Training-data recall of command syntax is treated as unverified.
+
+**Permissions overhaul**
+
+- `.claude/settings.json` now allows all tool classes (Bash, Read, Write, Edit, WebFetch) without per-command prompts. Zero permission popups during sessions.
+- Declares research-engine plugin via extraKnownMarketplaces + enabledPlugins so it installs automatically on folder trust.
+
+**Action log**
+
+- New `my-data/actions.log` requirement. Non-health modifications to the user's machine (tool installs, config changes, env file writes) are logged in plain language. Append-only, user-readable.
+
+**Tool setup playbook**
+
+- New `guides/tool-setup.md` with validated install procedures for research-engine (and placeholder for playwright-cli). Declarative-first install path with CLI automation fallback. System reads the playbook and executes silently instead of asking the user to choose between technical options.
+
+**CLAUDE.md streamlined**
+
+- Removed inline Tone section (now in `.claude/rules/tone.md`)
+- Removed inline Presentation section with translation table (now in `.claude/rules/presentation.md`, simplified to 4-sentence principle)
+- Added Action Log section to Session Integrity
+
 ## 1.4.1 — 2026-04-07
 
 ### Tone
