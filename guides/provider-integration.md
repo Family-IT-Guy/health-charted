@@ -44,7 +44,7 @@ After a provider visit, when the user shares what happened (recording, transcrip
 
 1. **Extract clinically relevant information:** diagnoses discussed, labs ordered, medication changes, provider recommendations, referrals, follow-up plans.
 2. **Create a structured summary** in `my-data/visit-notes.json`: date, provider, visit type, key topics, orders, medications, recommendations, follow-up timeline.
-3. **Route extracted data** to appropriate files per `guides/data-routing.md`: lab orders to status.json as pending items, medication changes to treatments.json, etc.
+3. **Route extracted data** to appropriate files per the Data Routing rules: lab orders to status.json as pending items, medication changes to treatments.json, etc.
 4. **Flag conflicts** between the provider's assessment and the system's current understanding. Present both sides with evidence. The user decides how to proceed.
 5. **Update hypotheses** if the provider interaction provided new data that validates or invalidates open hypotheses.
 
