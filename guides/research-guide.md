@@ -68,7 +68,7 @@ For each approved domain:
 1. Research the domain using available research tools (Perplexity integration preferred, web search as fallback).
 2. For deep dives: verify primary sources. Read the actual studies, not just summaries. Check methodology, sample size, funding, and whether conclusions follow from data.
 3. Write findings to `research/[NN-domain-name].md` with numbered file names for reading order.
-4. Apply epistemic discipline from `guides/epistemic-discipline.md`: trace mechanisms, evaluate evidence quality, note institutional positions vs data, flag gaps honestly.
+4. Apply epistemic discipline from the Epistemic Discipline rules: trace mechanisms, evaluate evidence quality, note institutional positions vs data, flag gaps honestly.
 5. Extract entities from the research and add to the file's YAML frontmatter:
 
    ```yaml
@@ -169,7 +169,7 @@ After creating or updating files, update:
 
 ## Research Quality Standards
 
-All research follows the epistemic discipline in `guides/epistemic-discipline.md`. In particular:
+All research follows the epistemic discipline in the Epistemic Discipline rules. In particular:
 
 - Trace mechanisms, not authorities
 - Evaluate methodology, not just conclusions

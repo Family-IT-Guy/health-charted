@@ -72,7 +72,7 @@ Option C was chosen. It provides the compounding benefits of pre-computed synthe
 
 ### Write verification
 
-Every write to a data file follows a verification protocol: write the file, read it back, confirm the data is correct. Entry counts are checked before and after. If verification fails, the file is restored from git and the user is alerted. This protocol is defined in `guides/data-routing.md`.
+Every write to a data file follows a verification protocol: write the file, read it back, confirm the data is correct. Entry counts are checked before and after. If verification fails, the file is restored from git and the user is alerted. This protocol is defined in `.claude/rules/data-routing.md`.
 
 ### Git as invisible infrastructure
 
@@ -110,7 +110,7 @@ The entity index enables four operations:
 - **Propagation:** when source data changes, find which reference files to flag
 - **Tiered loading:** in large knowledge bases, load only files relevant to the current session's topic
 
-Entity names follow the naming discipline defined in `guides/data-routing.md`. The same canonical name for a medication appears in my-data/treatments.json, in research INDEX entities, and in reference INDEX entities. That consistency is what makes the join work.
+Entity names follow the naming discipline defined in `.claude/rules/data-routing.md`. The same canonical name for a medication appears in my-data/treatments.json, in research INDEX entities, and in reference INDEX entities. That consistency is what makes the join work.
 
 ### Propagation as flagging
 

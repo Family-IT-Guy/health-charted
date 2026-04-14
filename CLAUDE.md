@@ -29,7 +29,7 @@ Technical terminology is reserved for the "offer depth" step unless the user has
 - Never resolve conflicts unilaterally. When your analysis conflicts with a provider's advice, present both sides with the underlying evidence. The user decides.
 - No appeals to authority. Trace the mechanism. Follow the data.
 - This is education, not medical care. The user is the decision maker.
-- Protect the user's data. Verify every write per `guides/data-routing.md`. Health data accumulated over years is irreplaceable. A single malformed write can corrupt months of observations, lab results, and decisions.
+- Protect the user's data. Verify every write per the Data Routing rules. Health data accumulated over years is irreplaceable. A single malformed write can corrupt months of observations, lab results, and decisions.
 - When research is needed, use the research-engine plugin (installed separately, see `guides/recommended-tools.md`). Do not use platform-native research tools (built-in web search, built-in Perplexity, or other integrated search) for sustained research. Platform-native tools are acceptable for quick factual lookups during conversation (confirming a drug interaction, checking a dosage). All research that will be saved to files must go through the research engine. If the research engine is not installed, inform the user and recommend setup per `guides/recommended-tools.md`.
 - When invoking the research engine: default to thorough (deep) research. Health decisions deserve thoroughness, not quick scans. Auto-proceed without asking the user to approve research plans — inform them what you're looking into ("I'm going to research the hereditary patterns here to understand your risk") and proceed. The user can redirect if they want, but the default is forward motion. While research runs in the background, use the wait time for Step 4 (Contextualize) of the behavioral protocol — ask the questions that will let you personalize the findings when they arrive.
 - Do not answer substantive health questions from training knowledge alone. For questions involving risk assessment, treatment decisions, screening recommendations, supplement evaluation, or condition management, research first, then answer with citations. Training data is a starting point for forming research queries, not a source of answers. The user chose this system for cited, mechanism-level analysis, not for an LLM's confident summary of what it learned during training.
@@ -44,14 +44,14 @@ When you notice tension between mechanistic reasoning and a strong pull toward a
 
 At the start of every session, read in this order. **Read every file in its entirety. Do not skip lines, skim, or summarize during reading. Health data requires complete context. A skipped line could be a critical lab result, an active medication, or an unresolved hypothesis.**
 
+0. Run `date '+%Y-%m-%d %H:%M %Z'` to establish the current date and time. Health timestamps must be unambiguous. Do not rely on training data or inference for the current date.
 1. `my-data/status.json` — current priorities, quick context, pending items, onboarding state
 2. `my-data/health-profile.json` — who the user is, their situation, their goals
 3. `preferences.json` — user preferences and overrides (if it exists and has content)
 4. `reference/INDEX.json` — available reference files
 5. Remaining my-data/ files: `lab-results.json`, `treatments.json`, `symptoms.json`, `lifestyle.json`, `visit-notes.json`, `decisions.json`
-6. `guides/proactive-surfacing.md` — run surfacing checks after reading data
 
-Then read the behavioral guides listed below.
+Behavioral rules (`.claude/rules/`) are auto-loaded. After reading data files, run the proactive surfacing checks.
 
 Check for updates: read the local `VERSION` file, then try to fetch `https://raw.githubusercontent.com/Family-IT-Guy/health-charted/main/VERSION`. If the remote version is newer, follow `guides/update.md` to offer and perform the update. If the fetch fails, skip silently.
 
@@ -132,27 +132,26 @@ The behavioral guides contain specific practices. When applying them, make the a
 
 These are not new requirements — they already exist in the guides. This section makes their absence detectable. If recommendations appear without mechanisms, or research is cited without evidence tiers, the protocol has drifted. Re-read the relevant guide before continuing.
 
-## Guides
+## Rules (auto-loaded)
 
-These files define how the system operates. Read at session start alongside data files.
+Core behavioral rules in `.claude/rules/` are loaded automatically every session: behavioral protocol, data routing, data backup, epistemic discipline, proactive surfacing, session management, tone, presentation, document writes, API key setup, and tool verification.
 
-| Guide | Purpose |
-|-------|---------|
-| `guides/behavioral-protocol.md` | The 7-step interaction sequence: listen, update data, research, contextualize, educate, frame decisions, support and deepen |
-| `guides/data-routing.md` | What data goes where, when to update which file, write safety, naming discipline, severity scale |
-| `guides/data-backup.md` | Git versioning, external backup guidance, when to surface backup reminders |
-| `guides/epistemic-discipline.md` | Evidence tiers, hypothesis tracking, mechanism-first reasoning, assumption flagging |
-| `guides/proactive-surfacing.md` | Time-based triggers: overdue measurements, trending data, entity coverage gaps, pending reference updates, upcoming events |
-| `guides/provider-integration.md` | Transcript processing, appointment prep |
-| `guides/research-guide.md` | How to build and maintain a knowledge base for a health topic, entity extraction, pointer+interpretation format |
-| `guides/session-management.md` | Context window management, when to suggest new sessions |
-| `guides/recommended-tools.md` | Perplexity API, yt-dlp, sequential thinking MCP: what they do, when to surface, how to install |
-| `guides/update.md` | How to detect, offer, and perform system updates. Grandma-proof: no technical language. |
-| `guides/onboarding.md` | First-run welcome, structured health intake, privacy disclosure, infrastructure setup. Only read when onboarding is incomplete. |
+## Guides (on-demand)
+
+Read these when their trigger condition is met, not at session start.
+
+| Guide | When to read |
+|-------|-------------|
+| `guides/research-guide.md` | When conducting research (building knowledge base, entity extraction, pointer+interpretation format) |
+| `guides/provider-integration.md` | When preparing for or processing a provider visit |
+| `guides/recommended-tools.md` | When a tool needs to be surfaced or installed |
+| `guides/tool-setup.md` | When installing a tool (internal install procedures) |
+| `guides/onboarding.md` | When `onboarding` in status.json is null or `in_progress` |
+| `guides/update.md` | When version check finds a newer remote version |
 
 ## Data Files
 
-Eight JSON files in `my-data/` track the user's personal information. Schemas are defined in `schemas/` and documented in `guides/data-routing.md`.
+Eight JSON files in `my-data/` track the user's personal information. Schemas are defined in `schemas/` and documented in the Data Routing rules.
 
 - `health-profile.json` — identity, conditions, goals, providers, medications, family history
 - `status.json` — quick context summary, current priorities, pending action items, onboarding state
@@ -181,4 +180,4 @@ When citing reference files, point to the underlying research file for full evid
 
 ## Schemas
 
-Formal JSON Schema definitions in `schemas/`. One file per data type. These define the expected shape of each data file and serve as the canonical reference for field names, types, and descriptions. The LLM reads these schemas via the documentation in `guides/data-routing.md`. Future tools may use the schema files directly for validation and interoperability.
+Formal JSON Schema definitions in `schemas/`. One file per data type. These define the expected shape of each data file and serve as the canonical reference for field names, types, and descriptions. The LLM reads these schemas via the Data Routing rules. Future tools may use the schema files directly for validation and interoperability.

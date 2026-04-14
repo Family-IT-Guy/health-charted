@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.6.0 — 2026-04-13
+
+### Auto-loaded behavioral rules
+
+Moved 6 every-session guides from `guides/` to `.claude/rules/` for framework-enforced auto-loading: behavioral protocol, data routing, data backup, epistemic discipline, proactive surfacing, session management. These rules now load automatically via Claude Code's rules system instead of depending on CLAUDE.md instructions.
+
+Guides that remain in `guides/` are now on-demand only, loaded when their trigger condition is met: research guide, provider integration, recommended tools, tool setup, onboarding, update.
+
+CLAUDE.md updated: Guides section split into "Rules (auto-loaded)" and "Guides (on-demand)" with trigger conditions. Session Initialization no longer instructs reading behavioral guides. Cross-references updated throughout.
+
+### Deterministic time query
+
+Session Initialization now runs `date` as Step 0 before reading any data files. Health timestamps depend on knowing the current date with certainty. Proactive surfacing, lab staleness checks, and treatment reassessment all require an unambiguous current date rather than LLM inference.
+
+### 80/20 default framing for recommendations
+
+Behavioral protocol Step 6 (Frame the Decisions) now defaults to an 80/20 structure when recommendations involve multiple interventions: lead with highest-value actions, stack additions by diminishing return, show what's cuttable and why. Each ordering claim must be evidence-backed per the Epistemic Discipline rules — if the research doesn't support a clear ranking, options are presented without implied priority. A perfect regimen nobody follows is worse than a good regimen they actually take.
+
 ## 1.5.1 — 2026-04-10
 
 ### Research quality

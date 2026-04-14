@@ -13,7 +13,7 @@ Don't force it. If the user wants to continue, continue.
 ## Keeping Files Current
 
 Update files continuously throughout the conversation, not at the end:
-- Route data as it comes in per `guides/data-routing.md`
+- Route data as it comes in per the Data Routing rules
 - Update `my-data/status.json` whenever priorities, action items, or scheduled events change during conversation
 - Document hypotheses as they're raised
 

@@ -139,4 +139,4 @@ When data routing reveals a pattern or raises a question, document it as a hypot
 - Mark `hypothesis_status` as `open`
 - Link to the related data entries across files by referencing canonical names
 
-When subsequent data arrives that validates or invalidates a hypothesis, update it immediately with the new evidence and reasoning. See `guides/epistemic-discipline.md` for full hypothesis tracking rules.
+When subsequent data arrives that validates or invalidates a hypothesis, update it immediately with the new evidence and reasoning. See the Epistemic Discipline rules for full hypothesis tracking rules.

@@ -23,7 +23,7 @@ If `onboarding` is null, this is a first run:
    }
    ```
 
-2. Initialize git versioning per `guides/data-backup.md` (if `.git` directory does not exist).
+2. Initialize git versioning per the Data Backup rules (if `.git` directory does not exist).
 
 ## Phase 1: First visit
 
@@ -103,7 +103,7 @@ These require multiple exchanges. Use this pattern: ask an open question, listen
 - **Recent labs or imaging** — if the platform supports filesystem access, offer to search their computer for lab PDFs
 - **Goals** — what they want from this, beyond any immediate concern
 
-Write data to the appropriate files as you go. Don't batch updates to the end. Each category maps to a specific data file per `guides/data-routing.md`. Timestamp when the intake is substantially complete.
+Write data to the appropriate files as you go. Don't batch updates to the end. Each category maps to a specific data file per the Data Routing rules. Timestamp when the intake is substantially complete.
 
 ### Step 5: Privacy disclosure
 
@@ -117,7 +117,7 @@ Phase 2 happens after Phase 1, or at the start of the next session. The user has
 
 ### Step 6: Backup setup
 
-Explain why it matters in plain language per `guides/data-backup.md`. Walk through setup if the user wants. Timestamp after discussion (even if deferred).
+Explain why it matters in plain language per the Data Backup rules. Walk through setup if the user wants. Timestamp after discussion (even if deferred).
 
 ### Step 7: Tool setup
 
