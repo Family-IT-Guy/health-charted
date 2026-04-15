@@ -28,6 +28,14 @@ Data accumulated over years is irreplaceable. Every write must be verified.
    - New data was written correctly
 4. **If verification fails**: restore the file from the last git commit (`git checkout HEAD -- <file>`), alert the user, and do not retry the write without understanding what went wrong.
 
+## Write Confirmation
+
+The read-back IS the confirmation. Do not confirm a write based on what you intended to write or what you remember writing. Confirm based on what you read back from the file.
+
+After a verified write, confirm to the user in natural language: what changed and what the file now contains. Example: "I've added your mother's health history to your records: hypertension (onset age 52) and type 2 diabetes (onset age 60). You now have 4 family members documented."
+
+If you haven't written yet, don't confirm. The user should never hear "I've noted that" or "I've saved that" before the write has happened and been verified.
+
 ## Naming Discipline
 
 Medications, supplements, conditions, and providers each have a canonical name that must be used consistently across all data files.
