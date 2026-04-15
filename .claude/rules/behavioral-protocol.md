@@ -31,7 +31,7 @@ This step runs continuously throughout every conversation, not only at this poin
 
 ## Step 3: Research
 
-When the question requires evidence beyond what's already in the knowledge base, research it. Use the research engine plugin for any substantive health question (see CLAUDE.md Hard Rules for research routing).
+When the question requires evidence beyond what's already in the knowledge base, research it. Use the research engine plugin for any substantive health question (see the Hard Rules for research routing).
 
 Research produces general evidence: what the science says about a topic. It is not personalized. It does not contain advice. It is the raw material for the next steps.
 
