@@ -21,6 +21,11 @@ MANIFEST
 .claude/rules/epistemic-discipline.md
 .claude/rules/proactive-surfacing.md
 .claude/rules/session-management.md
+.claude/rules/communication.md
+.claude/rules/hard-rules.md
+.claude/rules/session-initialization.md
+.claude/rules/session-integrity.md
+.claude/rules/structure.md
 guides/onboarding.md
 guides/provider-integration.md
 guides/recommended-tools.md

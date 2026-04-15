@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.7.0 — 2026-04-15
+
+### CLAUDE.md modularization
+
+CLAUDE.md reduced from 183 lines to ~20 by extracting behavioral content into auto-loaded `.claude/rules/` files. One concept, one file.
+
+Five new rule files:
+
+- **communication.md** — Honesty-is-default framing, language level calibration, interaction style.
+- **hard-rules.md** — Non-negotiable constraints (no advice without context, no fabrication, no appeals to authority, research-engine routing, etc.).
+- **session-initialization.md** — Read-order sequence and onboarding check.
+- **session-integrity.md** — Announce-before-executing, session start health check, action log, guide application markers.
+- **structure.md** — Data files inventory, knowledge file layout, schemas pointer.
+
+Two rule extensions:
+
+- **epistemic-discipline.md** gained a "Model Limitations and Meta-Bias" section (was CLAUDE.md Transparency About Model Limitations).
+- **data-routing.md** gained a "Write Confirmation" subsection capturing the "read-back IS the confirmation" framing and natural-language example (was CLAUDE.md Write verification).
+
+CLAUDE.md now contains only the identity statement, the on-demand guides table, and a one-line pointer to auto-loaded rules. No behavioral change for users — auto-loaded rules land in context every session regardless of where they live.
+
 ## 1.6.0 — 2026-04-13
 
 ### Auto-loaded behavioral rules
