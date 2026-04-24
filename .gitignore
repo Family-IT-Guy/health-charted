@@ -1,3 +1,24 @@
 .DS_Store
 **/.env
 .playwright-cli/
+
+# Claude Code session cruft — artifacts that accumulate across sessions
+# See ~/.claude/rules/git-deploy-discipline.md for why these must not reach prod
+.playwright-cli/
+**/.playwright-cli/
+auth.json
+**/auth.json
+qa-screenshots/
+**/qa-screenshots/
+*.playwright.yaml
+current.yml
+
+# Superpowers plugin artifacts (regeneratable)
+.superpowers/
+**/.superpowers/
+docs/superpowers/
+
+# Local backups, downloads, scratch screenshots
+backups/
+download.html
+download.txt
