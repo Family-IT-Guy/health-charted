@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.9.0 — 2026-04-28
+
+### Module spec sharpenings
+
+Three sharpenings to the v1.8 module spec, surfaced during prenatal-module authoring and resolved before the prenatal module shipped:
+
+- **`requires_hc_min_version` semantics defined** (`CONTRIBUTING.md`) — the field is the minimum HC core version whose `CONTRIBUTING.md` spec features are all used by the module. Bump when adopting features from a newer spec version. Module catalog presence in `guides/module-catalog.md` is a separate concept and does not imply a compatibility constraint.
+- **Submodules MAY declare own `guides[]`** (`CONTRIBUTING.md`) — submodules can ship phase-specific or topic-specific on-demand guides parallel to parent-module guides. Submodule guides activate only when the submodule's domain triggers fire. They are guides (on-demand), not rules (always-active). Behaviors that need to always activate signal the principle should promote to HC core.
+- **Wiki entity placement heuristic documented** (`CONTRIBUTING.md`) — primary-home placement with promotion-to-parent when 2+ submodules need direct unqualified access; sibling references use submodule-scoped wikilinks. Authoring guidance, not a structural rule.
+
+Validation rule extended: `guides[].file` path checks now apply to submodule guides as well as parent guides.
+
+### Module catalog: first Tier 1 module published
+
+`prenatal` joins `guides/module-catalog.md` Tier 1. Pregnancy and lactation domain knowledge across six phase submodules. Repo: `github.com/Family-IT-Guy/health-charted-module-prenatal`. The release validates the v1.8 module spec end-to-end on real domain content (~68 wiki entries, 6 reference docs, 7 research substance files, 5 module guides including 2 submodule guides).
+
+### Documentation
+
+- `README.md` adds a "For module authors" section pointing to `CONTRIBUTING.md` and the template repo at `github.com/Family-IT-Guy/health-charted-module-template`.
+- `guides/module-catalog.md` "Adding a module" section now references the template repo URL.
+
 ## 1.8.0 — 2026-04-28
 
 ### Modular architecture

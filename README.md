@@ -57,3 +57,11 @@ Health Charted is open source and community-supported. When improvements are ava
 ## License
 
 [CC BY-NC-SA 4.0](LICENSE). Use it, adapt it, share it. Credit the project, keep it non-commercial, share adaptations under the same license.
+
+## For module authors
+
+Health Charted's domain knowledge ships in modules — self-contained bundles of wiki entries, on-demand guides, schemas, and reference and research files for a specific domain. To author a module:
+
+- Read [CONTRIBUTING.md](CONTRIBUTING.md) for the canonical module specification.
+- Start from the template scaffold at [github.com/Family-IT-Guy/health-charted-module-template](https://github.com/Family-IT-Guy/health-charted-module-template).
+- Browse [guides/module-catalog.md](guides/module-catalog.md) to see what's already published.
