@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "health-charted/photos",
+  "title": "Photos Registry",
+  "description": "Central registry of photo references. Photos stay local on the user's machine; this file holds metadata and path pointers only. The framework never transmits image data. Supports progress photos, aspirational references, injury documentation, skin/hair changes, and other visual observations.",
+  "type": "object",
+  "properties": {
+    "_type": {
+      "const": "health-charted/photos"
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique photo ID, e.g., photo-2026-04-16-001"
+          },
+          "date": {
+            "type": "string",
+            "description": "ISO date the photo was taken"
+          },
+          "kind": {
+            "type": "string",
+            "description": "self-progress | aspirational-reference | injury | skin | hair | other"
+          },
+          "path": {
+            "type": ["string", "null"],
+            "description": "Relative path within the user folder (e.g., photos/2026-04-16-front.jpg). Null acceptable for aspirational references that are description-only or URL-based."
+          },
+          "angle": {
+            "type": ["string", "null"],
+            "description": "front | side-left | side-right | back | other — for consistent visual comparison across dates"
+          },
+          "conditions": {
+            "type": ["string", "null"],
+            "description": "Context: lighting, fasted state, time of day, post-workout, hydration, pose, clothing. Consistency across progress photos enables meaningful comparison."
+          },
+          "notes": {
+            "type": ["string", "null"],
+            "description": "User's notes about this photo"
+          },
+          "aspirational_source": {
+            "type": ["string", "null"],
+            "description": "For kind:aspirational-reference — self-stored file path, URL, public-figure name, or description-only (null path, description in notes)"
+          },
+          "what_attracts": {
+            "type": ["string", "null"],
+            "description": "For kind:aspirational-reference — what specifically the user wants to emulate (body composition, specific muscle group, skin quality, posture, face, etc.). Helps distinguish emulation targets from whole-person idolization."
+          },
+          "related_plan_id": {
+            "type": ["string", "null"],
+            "description": "Optional reference to a plan ID in my-data/strategic-plans.json"
+          },
+          "related_outcome": {
+            "type": ["string", "null"],
+            "description": "Optional canonical outcome name (e.g., fat-loss, injury-recovery, skin-aesthetics)"
+          },
+          "related_symptom_id": {
+            "type": ["string", "null"],
+            "description": "Optional reference to a symptom entry in my-data/symptoms.json"
+          },
+          "related_visit_id": {
+            "type": ["string", "null"],
+            "description": "Optional reference to a visit entry in my-data/visit-notes.json"
+          }
+        },
+        "required": ["id", "date", "kind"]
+      }
+    }
+  }
+}

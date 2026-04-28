@@ -139,3 +139,26 @@ If `onboarding.status` is `in_progress` at session start:
 - Check which steps have null timestamps across both phases.
 - Phase 1 incomplete: weave remaining steps into the conversation naturally.
 - Phase 2 incomplete: surface them explicitly: "We still haven't set up [backup/tools/priorities]. Want to handle that now, or after your question?" The user may defer, but incomplete Phase 2 steps must be raised at every session start until completed.
+
+## Module engagement intake
+
+Core onboarding (Phases 1-2 above) is general — it captures identity, conditions, providers, treatments, and goals regardless of which modules are installed. Module-specific intake happens separately, when a module first engages during conversation.
+
+When the user first triggers a module's domain (per the Session Initialization module scan and the LLM's domain-trigger judgment), check whether that module has been engaged before. Track per-module engagement state in `my-data/status.json` under `engaged_modules`:
+
+```json
+{
+  "engaged_modules": ["prenatal", "peptide"]
+}
+```
+
+If the engaging module is not yet in `engaged_modules`:
+
+1. Read the module's `MODULE.json` `module_intake` array (or per-submodule `intake_questions`, when engagement is at submodule grain).
+2. Ask the intake questions one at a time in conversation. Capture answers to relevant my-data files (`health-profile.json`, `lab-results.json`, etc.) per the Data Routing rules.
+3. Add the module's namespace to `engaged_modules` in `my-data/status.json` once intake is complete.
+4. Proceed with the user's substantive domain question.
+
+If the engaging module is already in `engaged_modules`, skip intake and proceed.
+
+Module-specific intake is opt-in by module — modules without `module_intake` declarations engage immediately without an intake step.

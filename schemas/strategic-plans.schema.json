@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "health-charted/strategic-plans",
+  "title": "Strategic Plans",
+  "description": "Measurement-driven plans tied to specific outcomes. Each plan captures baseline, target, monitoring cadence, and decision triggers so intervention effects can be evaluated objectively.",
+  "type": "object",
+  "properties": {
+    "_type": {
+      "const": "health-charted/strategic-plans"
+    },
+    "plans": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "Unique plan ID (e.g., plan-2026-04-fat-loss)" },
+          "outcome": { "type": "string", "description": "Canonical outcome name from wiki/entities/outcomes/ (e.g., fat-loss, lean-mass-gain, hormone-optimization)" },
+          "name": { "type": "string", "description": "Short user-facing name (e.g., 'Summer 2026 fat loss')" },
+          "status": { "type": "string", "description": "active, paused, completed, abandoned" },
+          "start_date": { "type": "string" },
+          "planned_reassessment_date": { "type": ["string", "null"], "description": "Next formal review date" },
+          "success_criteria": {
+            "type": "array",
+            "description": "How we'll know success. Mix of objective, functional, and subjective criteria.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "criterion": { "type": "string", "description": "What specifically counts as success for this axis" },
+                "kind": { "type": "string", "description": "objective (measurable), functional (ability-based), subjective (felt state)" },
+                "source": { "type": ["string", "null"], "description": "Where the measurement comes from (lab-results.json marker name, symptom entry, photo, performance metric)" }
+              }
+            }
+          },
+          "baseline": {
+            "type": "object",
+            "description": "Starting state captured before intervention",
+            "properties": {
+              "baseline_date": { "type": "string" },
+              "objective_markers": {
+                "type": "array",
+                "description": "Lab values, measurements, body composition at baseline",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "marker": { "type": "string", "description": "Canonical marker name (e.g., igf-1-serum, hba1c, weight, waist-circumference)" },
+                    "value": { "type": "string", "description": "Measured value with units" },
+                    "standard_range": { "type": ["string", "null"] },
+                    "functional_optimal": { "type": ["string", "null"] },
+                    "source": { "type": ["string", "null"], "description": "Where measured (lab-results.json entry date, self-measured, provider-ordered)" }
+                  }
+                }
+              },
+              "functional_baselines": {
+                "type": "array",
+                "description": "What the user can do at baseline (training capacity, sleep duration, specific abilities)",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "capacity": { "type": "string" },
+                    "current_state": { "type": "string" }
+                  }
+                }
+              },
+              "subjective_baselines": {
+                "type": "array",
+                "description": "Symptom severity, mood, energy, confidence, etc.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "domain": { "type": "string", "description": "e.g., morning energy, sleep quality, hunger pattern" },
+                    "rating": { "type": ["string", "integer", "null"], "description": "1-10 or qualitative" },
+                    "notes": { "type": ["string", "null"] }
+                  }
+                }
+              },
+              "photo_ids": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Optional references to baseline photo IDs in my-data/photos.json (kind:self-progress). Body composition, skin, hair, posture as relevant to the outcome."
+              }
+            }
+          },
+          "target": {
+            "type": "object",
+            "description": "Where the user wants to be and how they'll know",
+            "properties": {
+              "timeframe": { "type": "string", "description": "e.g., 6 months, by Jun 2026" },
+              "aspirational_photo_ids": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Optional references to aspirational-reference photo IDs in my-data/photos.json (kind:aspirational-reference). Captures 'this is what I want to look/be like' visual targets."
+              },
+              "objective_targets": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "marker": { "type": "string" },
+                    "target_value_or_range": { "type": "string" },
+                    "target_type": { "type": "string", "description": "specific-value, range, direction, trajectory-slope" },
+                    "how_to_know": { "type": "string", "description": "What makes this count as 'hit'" }
+                  }
+                }
+              },
+              "functional_targets": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "capacity": { "type": "string" },
+                    "target_state": { "type": "string" }
+                  }
+                }
+              },
+              "subjective_targets": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "domain": { "type": "string" },
+                    "target_rating": { "type": ["string", "integer", "null"] },
+                    "target_notes": { "type": ["string", "null"] }
+                  }
+                }
+              }
+            }
+          },
+          "monitoring_cadence": {
+            "type": "array",
+            "description": "What to re-measure, how often, by which phase",
+            "items": {
+              "type": "object",
+              "properties": {
+                "marker": { "type": "string" },
+                "phase": { "type": "string", "description": "initiation, steady-state, reassessment" },
+                "frequency": { "type": "string", "description": "e.g., weekly, monthly, every 3 months" },
+                "rationale": { "type": ["string", "null"], "description": "Why this cadence for this marker at this phase" },
+                "who_orders": { "type": ["string", "null"], "description": "clinician, DTC (Function Health, Walk-In Lab), self-measured" }
+              }
+            }
+          },
+          "decision_triggers": {
+            "type": "array",
+            "description": "Pre-committed triggers that prompt course change or reassessment",
+            "items": {
+              "type": "object",
+              "properties": {
+                "trigger": { "type": "string", "description": "What observation would fire this" },
+                "action": { "type": "string", "description": "What to do if triggered (pause, re-evaluate, consult clinician, stop, adjust)" },
+                "severity": { "type": "string", "description": "info, caution, stop-and-reassess, urgent" }
+              }
+            }
+          },
+          "decision_log_refs": {
+            "type": "array",
+            "description": "Pointers to my-data/decisions.json entries related to this plan",
+            "items": { "type": "string" }
+          },
+          "status_history": {
+            "type": "array",
+            "description": "Timeline of plan status changes",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": { "type": "string" },
+                "status": { "type": "string" },
+                "notes": { "type": ["string", "null"] }
+              }
+            }
+          },
+          "notes": { "type": ["string", "null"], "description": "Free-form context" }
+        }
+      }
+    }
+  }
+}

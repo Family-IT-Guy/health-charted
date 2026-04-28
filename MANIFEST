@@ -6,6 +6,8 @@ CHANGELOG.md
 VERSION
 README.md
 ARCHITECTURE.md
+CONTRIBUTING.md
+WIKI-CLAUDE.md
 LICENSE
 MANIFEST
 .gitignore
@@ -26,12 +28,17 @@ MANIFEST
 .claude/rules/session-initialization.md
 .claude/rules/session-integrity.md
 .claude/rules/structure.md
+.claude/rules/consultative-posture.md
+.claude/rules/trajectory-analysis.md
+.claude/rules/treatment-dynamics.md
 guides/onboarding.md
 guides/provider-integration.md
 guides/recommended-tools.md
 guides/research-guide.md
 guides/tool-setup.md
 guides/update.md
+guides/backup-setup.md
+guides/module-catalog.md
 schemas/decisions.schema.json
 schemas/health-profile.schema.json
 schemas/lab-results.schema.json
@@ -43,3 +50,6 @@ schemas/status.schema.json
 schemas/symptoms.schema.json
 schemas/treatments.schema.json
 schemas/visit-notes.schema.json
+schemas/photos.schema.json
+schemas/training.schema.json
+schemas/strategic-plans.schema.json
