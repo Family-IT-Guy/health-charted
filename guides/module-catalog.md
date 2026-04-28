@@ -20,7 +20,15 @@ If the user asks about modules not in this catalog, they may be community-publis
 
 Modules curated and maintained by Family-IT-Guy. License default: CC BY-NC-SA 4.0.
 
-_(No modules currently published. Prenatal module expected in HC v1.9 release.)_
+### prenatal
+
+Pregnancy and lactation domain knowledge: nutrient biochemistry, lab interpretation in pregnancy context, phase-distinct supplementation, biological windows, postpartum recovery. Six phase submodules (preconception, trimester-1, trimester-2, trimester-3, postpartum, lactation) with per-submodule guides, intake questions, and entity coverage.
+
+- Repo: github.com/Family-IT-Guy/health-charted-module-prenatal
+- License: CC BY-NC-SA 4.0
+- Maintainer: Family-IT-Guy
+- Current version: 0.1.0
+- Status: beta
 
 <!-- When modules ship, add entries in this format:
 
@@ -48,7 +56,7 @@ When installing a Tier 3 module, surface to the user: "This is from a source not
 
 ## Adding a module to this catalog
 
-If you've published a Tier 1 module under `Family-IT-Guy/health-charted-module-<name>`, open a PR against `Family-IT-Guy/health-charted` adding an entry above. See `CONTRIBUTING.md` for module authoring spec.
+If you've published a Tier 1 module under `Family-IT-Guy/health-charted-module-<name>`, open a PR against `Family-IT-Guy/health-charted` adding an entry above. See `CONTRIBUTING.md` for the module authoring spec, and start from the template at `github.com/Family-IT-Guy/health-charted-module-template`.
 
 ## v2 evolution
 

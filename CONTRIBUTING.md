@@ -70,7 +70,7 @@ The canonical declaration of your module. Required fields:
 - `namespace`: how your module's wiki entities are scoped (typically same as `name`)
 - `description`: one-sentence factual description
 - `license`: SPDX identifier or short name
-- `requires_hc_min_version`: minimum HC core version your module needs
+- `requires_hc_min_version`: minimum HC core version whose `CONTRIBUTING.md` spec features are all used by this module. Bump this when adopting features added in a newer spec version (for example, submodule-level `guides[]` was added in HC core 1.9, so a module that uses submodule guides requires `1.9.0` or later). Module catalog presence in `guides/module-catalog.md` is a separate concept and does not imply a compatibility constraint.
 
 Optional fields:
 
@@ -124,11 +124,26 @@ Example full MODULE.json with submodules and triggers:
         "Have you had recent total-T, free-T, or SHBG labs?"
       ],
       "covers_entities": ["testosterone", "free-testosterone", "shbg", "androgen-receptor"],
+      "guides": [
+        { "file": "guides/testosterone-clinical-evaluation.md", "trigger": "When the user asks about TRT initiation, dose adjustment, or clinician-collaboration patterns specific to testosterone" }
+      ],
       "submodules": []
     }
   ]
 }
 ```
+
+### Submodule fields
+
+Each submodule object accepts the same content-shape fields as the parent module:
+
+- `namespace`: the submodule's namespace segment
+- `version`: independent semver, see Submodule versioning
+- `description`, `domain_triggers`, `salience_hints`: same shape as parent
+- `intake_questions`: prompts the LLM may use when engaging this submodule
+- `covers_entities`: canonical names of entities/concepts authored under this submodule's scope (`module:submodule:entity`)
+- `guides`: array of `{file, trigger}` objects identical in shape to parent `guides[]`. Submodule guides are stored in the parent module's `guides/` directory and activate only when the submodule's domain triggers fire. Submodule guides are on-demand the same way parent guides are; they are not rules. Submodule-level guidance that needs to always activate signals the principle should promote to HC core, not become a module rule. (Spec feature added in HC core 1.9.)
+- `submodules`: nested submodule array (recursive)
 
 ## Wiki entries
 
@@ -169,6 +184,16 @@ Use wikilinks (`[[entity-slug]]`) for references between entities.
 - To HC core wiki: unscoped if the entity is in core (`[[receptor-dynamics]]`)
 
 The LLM resolves wikilinks by searching scopes in order: same submodule, ancestor submodules, core wiki. Unresolved wikilinks fail validation at install.
+
+### Entity placement heuristic
+
+Where to author an entity that's relevant to multiple submodules:
+
+- Place an entity at its **primary home** — the submodule where it most naturally belongs.
+- **Promote to parent scope** when 2+ submodules need direct unqualified access to the entity (cross-cutting nutrients, lab markers, mechanisms, genetic variants).
+- **Use qualified wikilinks for sibling references** when the primary home is clear (a phase-anchored window referenced from a different phase).
+
+The pattern that emerges: cross-cutting reference content (entities that don't belong to any one phase or topic) lives at parent scope; phase-anchored or topic-anchored content lives in the submodule that owns it; sibling references use submodule-scoped wikilinks. Author judgment applies — the rule is "primary home + promote-when-shared," not a strict binary.
 
 ## The Module Promotion Filter
 
@@ -251,7 +276,7 @@ The Health Charted system validates these properties when a module is installed 
 - Required fields present (`name`, `version`, `namespace`, `description`, `license`, `requires_hc_min_version`)
 - `version` is valid semver
 - `requires_hc_min_version` ≤ current HC core VERSION
-- All declared `guides[].file` paths exist
+- All declared `guides[].file` paths exist (parent and submodule guides)
 - All declared schemas in `schemas/` exist
 - `covers_entities` slugs exist in `wiki/INDEX.json`
 - Wiki entities' `submodule_path` values match a declared submodule namespace path
