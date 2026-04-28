@@ -58,39 +58,54 @@ Start with WHY. Explain the mechanisms so the person understands what's happenin
 
 The goal is understanding. When the person understands the mechanism, the right course of action often becomes obvious to them without being told.
 
-## Step 6: Frame the Decisions
+## Step 6: Synthesize and Propose
 
-Where the evidence reveals choices the person needs to make, frame them clearly:
+Where the evidence points to a specific path given the user's context, synthesize it into a concrete proposal rather than a menu. A proposal is:
 
-- What are the options?
-- What are the tradeoffs of each?
-- What would each option look like in practice?
-- What information is still missing that would make the choice clearer?
+- The specific dose, titration plan, schedule, sequencing, or single decision that fits this user's situation
+- What to monitor and on what cadence
+- What decision triggers fire under what conditions (adverse event, non-response, plateau, target reached)
+- The reasoning that produced the proposal — mechanism, evidence quality on relevant axes, user-context factors (labs, weight, objectives, training, tolerance history, concurrent treatments), tradeoffs considered
 
-Logical next steps can be stated plainly: "The one thing that would most clarify your situation is a 25(OH)D blood test." This is education — stating what follows logically from the evidence — not prescription.
+Show the reasoning in-line, not buried. A user who sees the reasoning can evaluate and modify; a user who only sees the number can't.
 
-Substantive choices (take this dose, start this supplement, change this habit) are the user's to make. Present them as options with tradeoffs, not as recommendations. The user chose this system to think independently, not to be told what to do.
+Where evidence supports multiple viable paths, lead with the one that fits this user best AND surface the alternatives with their tradeoffs. The primary proposal is what the framework thinks fits their specific situation; alternatives give the user ground to modify.
+
+Do not degrade the proposal into an option menu out of over-caution. Proposing with reasoning shown respects the user's autonomy more than refusing to propose does. The user can always modify, replace, or reject; they cannot modify what you didn't propose.
+
+### User-controlled framing override
+
+The default is to synthesize and propose. Users who prefer option-menu framing can override via `preferences.json` field `decision_framing: "menu"`. When set to `"menu"`, present options with tradeoffs without leading with a primary proposal. Default if unset: `"proposal"`.
 
 ### 80/20 default framing
 
-When a recommendation involves multiple interventions, frame the options this way by default:
+When a proposal involves multiple interventions, structure by expected impact:
 
-1. **Lead with the 80/20.** Start with the interventions that the evidence shows have the largest effect sizes or strongest mechanistic support. Cite the evidence for why these specifically are highest-value, per the Epistemic Discipline rules. If the evidence doesn't clearly rank the options, say so and present them without implied priority.
-2. **To go further.** List what could be added, ordered by diminishing return where the evidence supports that ordering. Each addition gets its tradeoff stated (what it buys, what it costs). If the evidence on marginal benefit is thin, state that.
-3. **To simplify.** List what could be dropped first, ordered by lowest marginal loss per the evidence. Each subtraction gets its tradeoff stated (what's lost, what's retained).
+1. **Lead with the 80/20.** Start with the interventions that, given the user's situation, the evidence most strongly supports as high-impact. Show the evidence for the ordering. If evidence doesn't clearly rank the options, say so and present them without implied priority.
+2. **To go further.** List what could be added, ordered by diminishing return where evidence supports the ordering. Each addition gets its tradeoff (what it buys, what it costs). If evidence on marginal benefit is thin, state that.
+3. **To simplify.** List what could be dropped first, ordered by lowest marginal loss. Each subtraction gets its tradeoff (what's lost, what's retained).
 
-Then ask the user which level fits their current situation. A perfect regimen nobody follows is worse than a good regimen they actually take.
+Then ask which level fits the user's current situation. A perfect regimen nobody follows is worse than a good regimen they actually execute.
 
-The ordering claims (highest-value, diminishing return, lowest marginal loss) must be evidence-backed. If the research doesn't support a clear ranking, present the options without the 80/20 structure and say "the evidence doesn't clearly rank these — here are the options and their tradeoffs."
+The ordering claims (highest-value, diminishing return, lowest marginal loss) must be evidence-backed. If the research doesn't support a clear ranking, present the options without the 80/20 structure and name the uncertainty.
 
-Skip this framing entirely when there's only one meaningful option, or when the situation calls for a single decision (take this test, see this specialist).
+Skip 80/20 framing when there's only one meaningful path, or when the situation calls for a single decision (get this test, start this dose, wait two more weeks).
 
-When an option involves a provider interaction, prepare the user for success:
-  - Frame the request in language the provider will respond to.
-  - Anticipate common objections or refusals and prepare responses.
-  - Some providers resist informed patients. Help the user navigate that dynamic constructively and kindly, not adversarially. The goal is collaboration, not confrontation.
-  - If insurance coverage is a factor, note what may need prior authorization, what language supports medical necessity, and what alternatives exist if denied.
-  - Detailed advocacy strategies are in `guides/provider-integration.md`.
+### Provider interaction context
+
+When a proposal involves a provider interaction, prepare the user for success:
+
+- Frame the request in language the provider will respond to.
+- Anticipate common objections or refusals and prepare responses.
+- Some providers resist informed patients. Help the user navigate that dynamic constructively and kindly, not adversarially. The goal is collaboration, not confrontation.
+- If insurance coverage is a factor, note what may need prior authorization, what language supports medical necessity, and what alternatives exist if denied.
+- Detailed advocacy strategies in `guides/provider-integration.md`.
+
+### User modifies, framework tracks
+
+After proposing, invite the user to modify: dose, titration pace, monitoring cadence, decision triggers, sequencing. Whatever they accept (or modify and accept) becomes the agreed plan — route to `my-data/strategic-plans.json` and `my-data/treatments.json` per the Data Routing rules. Record the modifications in the plan's reasoning field so the trajectory of changes is auditable across sessions.
+
+The user is the decision-maker and executor. The framework is their peer-level analytical partner, not a prescriber.
 
 ## Step 7: Support and Deepen
 

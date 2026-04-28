@@ -68,7 +68,7 @@ For each approved domain:
 1. Research the domain using available research tools (Perplexity integration preferred, web search as fallback).
 2. For deep dives: verify primary sources. Read the actual studies, not just summaries. Check methodology, sample size, funding, and whether conclusions follow from data.
 3. Write findings to `research/[NN-domain-name].md` with numbered file names for reading order.
-4. Apply epistemic discipline from the Epistemic Discipline rules: trace mechanisms, evaluate evidence quality, note institutional positions vs data, flag gaps honestly.
+4. Apply epistemic discipline from the Epistemic Discipline rules: trace mechanisms, evaluate evidence on its axes (methodology, replication, mechanism traceability, COI exposure, generalizability), surface institutional positions separately from effect evidence (Confidence-Authority Decoupling), name projections across domains explicitly (Domain Projection Discipline), evaluate combinations as their own claims (Combination Evidence Discipline), surface thresholds as claims with their own evidence base (Threshold-as-Claim Discipline), flag gaps honestly.
 5. Extract entities from the research and add to the file's YAML frontmatter:
 
    ```yaml

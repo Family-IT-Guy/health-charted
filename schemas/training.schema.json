@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "health-charted/training",
+  "title": "Training Record",
+  "description": "Structured resistance and performance training programming, progression, and recovery state. Complements lifestyle.json which handles general movement (walking, recreational sports, non-programmed activity). Populate only what the user actually tracks — all sections are optional.",
+  "type": "object",
+  "properties": {
+    "_type": {
+      "const": "health-charted/training"
+    },
+    "current_program": {
+      "type": ["object", "null"],
+      "description": "What the user is on right now. Single current program; prior programs go in phase_history.",
+      "properties": {
+        "name": { "type": "string", "description": "Program name — e.g., 'PPL 6-day', '5/3/1 BBB', 'custom hypertrophy block'" },
+        "type": { "type": ["string", "null"], "description": "powerlifting | bodybuilding | general-strength | sport-specific | calisthenics | endurance | hybrid" },
+        "split": { "type": ["string", "null"], "description": "upper/lower | push/pull/legs | full body | body part | other" },
+        "frequency": { "type": ["string", "null"], "description": "Training days per week — e.g., '4', '6', '3 with optional 4th'" },
+        "duration": { "type": ["string", "null"], "description": "How long on this program — e.g., '8 weeks', '3 months'" },
+        "current_phase": { "type": ["string", "null"], "description": "accumulation | intensification | deload | cut | bulk | maintenance | peaking | rehab" },
+        "weekly_volume": { "type": ["string", "null"], "description": "Volume as user tracks it — sets per muscle per week, total weekly sets, or descriptive (high/moderate/low)" },
+        "intensity_style": { "type": ["string", "null"], "description": "RPE-based | %1RM-based | AMRAP | fixed load | autoregulated | other" },
+        "progression_model": { "type": ["string", "null"], "description": "linear weight | DUP | block periodization | autoregulated RPE | LP with deloads | undulating" },
+        "modifications": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Exercise substitutions or adaptations — e.g., 'front squat instead of back squat due to lower back'"
+        },
+        "notes": { "type": ["string", "null"] }
+      }
+    },
+    "key_lifts": {
+      "type": "array",
+      "description": "Longitudinal tracking of primary lifts — the main movements the user cares about progressing on",
+      "items": {
+        "type": "object",
+        "properties": {
+          "lift": { "type": "string", "description": "Canonical lift name — squat, bench, deadlift, OHP, front squat, RDL, pull-up, etc." },
+          "current_working_weight": { "type": ["string", "null"], "description": "Most recent typical working weight with rep scheme — e.g., '315 x 5', '225 x 8'" },
+          "estimated_1rm": { "type": ["string", "null"], "description": "Current estimated 1RM if tracked" },
+          "trend": { "type": ["string", "null"], "description": "progressing | stable | regressing | recovering-from-injury" },
+          "history": {
+            "type": "array",
+            "description": "Append-only progression log. Append new entries; never modify old.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": { "type": "string" },
+                "working_weight": { "type": "string" },
+                "context": { "type": ["string", "null"], "description": "PR attempt | regular session | deload week | return from break | injury modification" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "phase_history": {
+      "type": "array",
+      "description": "Append-only log of training phase transitions — captures longitudinal context for correlating training periods with outcomes",
+      "items": {
+        "type": "object",
+        "properties": {
+          "start_date": { "type": "string" },
+          "end_date": { "type": ["string", "null"], "description": "Null if phase is current" },
+          "phase": { "type": "string", "description": "cut | bulk | maintenance | hypertrophy-block | strength-block | peaking | deload | rehab | off-season | in-season" },
+          "goal": { "type": ["string", "null"] },
+          "outcome": { "type": ["string", "null"], "description": "Filled retrospectively — what actually happened" },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "recovery_indicators": {
+      "type": ["object", "null"],
+      "description": "Subjective and objective recovery state. HRV and subjective recovery may correlate with intervention effects when relevant interventions are active.",
+      "properties": {
+        "hrv_tracking": { "type": ["boolean", "null"], "description": "Is the user tracking HRV (via wearable or manual)?" },
+        "recent_hrv_trend": { "type": ["string", "null"], "description": "improving | stable | declining | noisy — qualitative trend over recent weeks" },
+        "subjective_recovery": { "type": ["string", "null"], "description": "How well-recovered between sessions generally — 1-10 rating or qualitative" },
+        "sleep_quality_context": { "type": ["string", "null"], "description": "Cross-reference to lifestyle.json sleep if recovery is sleep-limited" },
+        "readiness_protocol": { "type": ["string", "null"], "description": "How the user decides daily training — autoregulation method, HRV threshold, subjective check-in" }
+      }
+    },
+    "adherence_log": {
+      "type": "array",
+      "description": "Optional per-week adherence tracking. Useful for evaluating whether plateau is about programming/intervention or about execution.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "week_of": { "type": "string", "description": "ISO date of Monday (or user's week-start convention)" },
+          "sessions_planned": { "type": ["integer", "null"] },
+          "sessions_completed": { "type": ["integer", "null"] },
+          "volume_achieved": { "type": ["string", "null"], "description": "e.g., 'full', '80%', 'deload-appropriate'" },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "injuries_and_limitations": {
+      "type": "array",
+      "description": "Ongoing physical limitations that affect training and whose status may inform intervention reasoning (e.g., recovery interventions, hormone optimization, regenerative protocols)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "area": { "type": "string", "description": "Body area or joint affected — lower back, right shoulder, left knee, etc." },
+          "status": { "type": "string", "description": "active | resolved | ongoing-modification | monitoring" },
+          "start_date": { "type": ["string", "null"] },
+          "affects_lifts": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Which lifts this injury modifies or prevents"
+          },
+          "current_modification": { "type": ["string", "null"], "description": "Current exercise substitution or volume reduction" },
+          "related_symptom_id": { "type": ["string", "null"], "description": "Optional link to symptoms.json entry" },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    }
+  }
+}

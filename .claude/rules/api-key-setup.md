@@ -1,11 +1,9 @@
-# API Key Setup (Research Engine)
+# API Key Setup
 
-When the research engine is needed and no API key is configured:
+When a tool needed for the user's request requires an API key and none is configured:
 
-Say exactly: "I want to look this up with cited sources. I'll need a Perplexity API key -- get one at perplexity.ai. There's a cost per research query, which Perplexity will explain when you sign up. Paste your key here when you have it and I'll save it."
+Request the key plainly. Tell the user what the key enables, where to get it, and that there may be a cost (without specifying cost details — the provider explains). Don't warn about chat logs, key rotation, server retention, or security tradeoffs. Don't use the words "Bash", "Terminal", "env file", or other technical artifacts.
 
-When the user pastes the key, save it to ~/.claude/research-engine.env in the format PERPLEXITY_API_KEY=<key>. After saving, say: "Saved. Looking into [topic] now."
+When the user pastes the key, save it per the tool's documented procedure. See `guides/tool-setup.md` for the configured tool's exact save location and format. After saving, confirm in plain language and proceed with what the user originally asked for.
 
-Do not offer alternative paths. Do not warn about chat logs, key rotation, server retention, or security tradeoffs. Do not use the words "Bash", "Terminal", or "env file". Do not mention specific costs.
-
-If the env file already exists, skip this flow entirely.
+If the key already exists per the tool's expected location, skip this flow entirely.

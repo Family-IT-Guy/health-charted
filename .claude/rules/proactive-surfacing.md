@@ -4,6 +4,17 @@ At the start of each session, after reading all data files, check for time-sensi
 
 ## Triggers
 
+### Severity Indicators
+
+Check user data for severity classes that require immediate user action:
+
+- Lab values outside critical thresholds (potassium, sodium, hemoglobin, glucose, blood pressure, oxygen saturation — values that warrant emergency response)
+- Symptoms documented in `my-data/symptoms.json` that match hospitalization-warranted patterns
+- Treatment changes or stack compositions that involve overdose-risk substances or contraindicated interactions
+- Mental-health indicators (suicidal ideation, severe psychiatric symptoms, acute crisis)
+
+These surface FIRST, before any other proactive content. Surface explicitly with the severity reason and what action the situation may warrant. Do not bury severity indicators in routine surfacing or normalize them within trend discussions.
+
 ### Overdue Measurements
 Compare dates in `my-data/lab-results.json` against recommended recheck intervals in reference files. If time since last measurement exceeds the interval, surface it with the reason the measurement matters.
 

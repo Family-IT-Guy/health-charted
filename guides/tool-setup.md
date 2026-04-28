@@ -39,7 +39,19 @@ Verification: `jq '.plugins' ~/.claude/plugins/installed_plugins.json` should li
 
 Post-install: user must restart Claude Desktop (quit + reopen) for the plugin to load.
 
-**API key setup:** See `.claude/rules/api-key-setup.md`.
+**API key setup:**
+
+The Research Engine requires a Perplexity API key.
+
+Per `.claude/rules/api-key-setup.md` posture (request plainly, save without exposing technical detail), request with this script:
+
+> "I want to look this up with cited sources. I'll need a Perplexity API key — get one at perplexity.ai. There's a cost per research query, which Perplexity will explain when you sign up. Paste your key here when you have it and I'll save it."
+
+When the user pastes the key, save to `~/.claude/research-engine.env` in the format `PERPLEXITY_API_KEY=<key>`.
+
+After saving, confirm: "Saved. Looking into [topic] now."
+
+If `~/.claude/research-engine.env` already exists with `PERPLEXITY_API_KEY`, skip this flow entirely.
 
 ---
 
