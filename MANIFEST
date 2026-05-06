@@ -31,6 +31,8 @@ MANIFEST
 .claude/rules/consultative-posture.md
 .claude/rules/trajectory-analysis.md
 .claude/rules/treatment-dynamics.md
+.claude/rules/data-shape-patterns.md
+.claude/rules/entity-context-verification.md
 guides/onboarding.md
 guides/provider-integration.md
 guides/recommended-tools.md
@@ -53,3 +55,4 @@ schemas/visit-notes.schema.json
 schemas/photos.schema.json
 schemas/training.schema.json
 schemas/strategic-plans.schema.json
+schemas/genomic-markers.schema.json

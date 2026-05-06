@@ -59,6 +59,11 @@
         }
       }
     },
+    "engaged_modules": {
+      "type": "array",
+      "description": "Modules engaged in the current session (set when domain triggers fire). Snapshot only — not durable history.",
+      "items": { "type": "string" }
+    },
     "onboarding": {
       "type": ["object", "null"],
       "description": "Onboarding progress tracker. Null before first run. Populated by LLM on first session.",

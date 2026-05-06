@@ -40,7 +40,14 @@
         "properties": {
           "condition": { "type": "string", "description": "Canonical condition name" },
           "date_of_diagnosis": { "type": ["string", "null"], "description": "When diagnosed or first suspected" },
-          "status": { "type": ["string", "null"], "description": "Current status: active, investigating, resolved, managed, etc." },
+          "status": { "type": ["string", "null"], "description": "Legacy free-text status. Prefer 'lifecycle_status' for new entries." },
+          "lifecycle_status": {
+            "type": ["string", "null"],
+            "enum": [null, "suspected", "investigating", "active", "managed", "resolved"],
+            "description": "Current state of this condition. suspected = noted but not yet investigated; investigating = under workup; active = confirmed and ongoing; managed = stable under intervention; resolved = no longer present."
+          },
+          "lifecycle_status_since": { "type": ["string", "null"], "description": "ISO date the current lifecycle_status began" },
+          "lifecycle_status_notes": { "type": ["string", "null"], "description": "Free-text rationale or context for the current status" },
           "notes": { "type": ["string", "null"] }
         }
       }

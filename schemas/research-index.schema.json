@@ -15,9 +15,15 @@
         "type": "object",
         "properties": {
           "file": { "type": "string", "description": "Filename relative to research/" },
+          "filename": { "type": ["string", "null"], "description": "Alias for file. Either may be used; both are accepted." },
+          "research_id": { "type": ["string", "null"], "description": "Stable identifier for the research file (e.g., RE-2026-0504-001). Issued by the research engine on creation." },
           "topic": { "type": "string" },
-          "summary": { "type": "string" },
-          "when_to_reference": { "type": "string", "description": "When this file is useful during a session" },
+          "summary": { "type": ["string", "null"] },
+          "when_to_reference": { "type": ["string", "null"], "description": "When this file is useful during a session" },
+          "depth": { "type": ["string", "null"], "description": "Research depth tier (1 = light, 3 = deep). Recorded for retrospective evaluation of evidence weight." },
+          "date_created": { "type": ["string", "null"], "description": "ISO date the research file was generated" },
+          "source_count": { "type": ["integer", "null"], "description": "Number of sources cited in the research file" },
+          "filename_date_note": { "type": ["string", "null"], "description": "Free-text note when the filename's embedded date differs from date_created (e.g., back-dated synthesis of older sources)" },
           "entities": {
             "type": "object",
             "description": "Canonical entity names covered by this file, keyed by entity type. Used for cross-referencing, propagation, and gap detection.",

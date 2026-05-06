@@ -17,16 +17,43 @@
         "properties": {
           "type": { "type": "string", "description": "medication, supplement, therapy, environmental modification, etc." },
           "name": { "type": "string", "description": "Canonical treatment name. Use this exact string in all other files." },
+          "brand_product": { "type": ["string", "null"], "description": "Specific brand and product name (e.g., 'Carlson Norwegian Cod Liver Oil')" },
           "dose": { "type": ["string", "null"] },
           "form": { "type": ["string", "null"] },
           "frequency": { "type": ["string", "null"] },
+          "timing": { "type": ["string", "null"], "description": "When during the day this is taken (e.g., 'morning with food', 'evening', 'before bed')" },
           "start_date": { "type": ["string", "null"] },
+          "status": { "type": ["string", "null"], "description": "Legacy free-text status. Prefer 'lifecycle_status' for new entries." },
+          "lifecycle_status": {
+            "type": ["string", "null"],
+            "enum": [null, "pending", "planned", "ordered", "received", "active", "paused", "discontinued"],
+            "description": "Current state of this treatment. pending = framework-suggested, awaiting user commitment; planned = user-committed, not yet acquired; ordered = purchase placed, awaiting arrival; received = on hand, not yet started; active = currently in protocol; paused = temporarily suspended; discontinued = permanently stopped."
+          },
+          "lifecycle_status_since": { "type": ["string", "null"], "description": "ISO date the current lifecycle_status began" },
+          "lifecycle_status_notes": { "type": ["string", "null"], "description": "Free-text rationale or context for the current status" },
           "mechanism": { "type": ["string", "null"], "description": "How this treatment works at the biological level" },
           "evidence_tier": { "type": ["string", "null"], "description": "Evidence tier per epistemic-discipline guide" },
           "effects": { "type": ["string", "null"], "description": "Observed positive effects" },
           "side_effects": { "type": ["string", "null"], "description": "Observed negative effects" },
           "monitoring": { "type": ["string", "null"], "description": "What to track and how often" },
-          "interactions": { "type": ["string", "null"], "description": "Known or suspected interactions with other treatments" }
+          "interactions": { "type": ["string", "null"], "description": "Known or suspected interactions with other treatments" },
+          "ingredient_amounts": {
+            "type": ["array", "null"],
+            "description": "Time-stamped snapshots of formulation contents. Use this array-of-objects shape for any per-date verification or ingredient list change. Never embed dates in field names (anti-pattern; see .claude/rules/data-shape-patterns.md).",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": { "type": "string", "description": "ISO date the contents were verified or recorded" },
+                "source": { "type": ["string", "null"], "description": "Where the values came from (label, manufacturer site, COA, third-party assay)" },
+                "values": {
+                  "type": "object",
+                  "description": "Map of ingredient name → amount with units (e.g., 'Vitamin_C': '1000 mg'). Open-ended; ingredients vary by product.",
+                  "additionalProperties": { "type": ["string", "number", "null"] }
+                },
+                "notes": { "type": ["string", "null"] }
+              }
+            }
+          }
         }
       }
     }

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "health-charted/genomic-markers",
+  "title": "Health Charted Genomic Markers",
+  "description": "Genetic variants, methylation marker states, and pharmacogenomic flags. Captures genomic findings that inform personalized interpretation of treatments, lab results, and risk discussions. Source provenance and date are first-class — different test reports may yield different findings, and methodology evolves.",
+  "type": "object",
+  "properties": {
+    "_type": {
+      "const": "health-charted/genomic-markers",
+      "description": "File type identifier"
+    },
+    "variants": {
+      "type": "array",
+      "description": "Single nucleotide variants and other gene-level findings. Canonical name source for genotype references in other files.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "gene": { "type": "string", "description": "Canonical gene name (e.g., 'MTHFR', 'BHMT', 'APOE')" },
+          "variant": { "type": "string", "description": "Variant identifier. Either protein-notation (e.g., 'C677T') or rs-number (e.g., 'rs1801133') is accepted; use the form the source uses. Cross-references between forms can be noted in 'notes'." },
+          "alleles": { "type": ["string", "null"], "description": "Observed alleles (e.g., 'C/T', 'A/A', 'ε3/ε4'). Format depends on variant type." },
+          "zygosity": {
+            "type": ["string", "null"],
+            "enum": [null, "heterozygous", "homozygous-major", "homozygous-minor"],
+            "description": "Standardized zygosity classification. heterozygous = one copy of variant; homozygous-major = two copies of major (usually wild-type) allele; homozygous-minor = two copies of minor (usually variant) allele."
+          },
+          "functional_implication": { "type": ["string", "null"], "description": "What this variant means functionally (e.g., '~70% MTHFR activity', 'slow methylator', 'increased AD risk')" },
+          "source": { "type": ["string", "null"], "description": "Which test or report this came from (e.g., '23andMe v5 raw, 2024-08', 'Genova Detoxigenomic Profile 2022-03')" },
+          "date_reported": { "type": ["string", "null"], "description": "ISO date the variant was reported in the source" },
+          "notes": { "type": ["string", "null"], "description": "Free-form context — alternate variant identifiers, related variants, clinical interpretation caveats, etc." }
+        },
+        "required": ["gene", "variant"]
+      }
+    },
+    "methylation_markers": {
+      "type": "array",
+      "description": "Methylation states at specific genomic sites. Distinct from genetic variants — these are epigenetic findings that can change over time.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "site": { "type": "string", "description": "Genomic site or gene region (e.g., 'APOE promoter', 'MGMT promoter', 'global LINE-1')" },
+          "state": {
+            "type": ["string", "null"],
+            "enum": [null, "hypermethylated", "hypomethylated", "normal"],
+            "description": "Standardized state classification. Reports using percentages or beta values should record those in 'notes'; the enum captures the actionable interpretation."
+          },
+          "source": { "type": ["string", "null"], "description": "Which test or report this came from" },
+          "date_reported": { "type": ["string", "null"], "description": "ISO date the measurement was taken" },
+          "notes": { "type": ["string", "null"], "description": "Quantitative values, methodology, interpretation caveats" }
+        },
+        "required": ["site"]
+      }
+    },
+    "pharmacogenomic_flags": {
+      "type": "array",
+      "description": "Pharmacogenomic phenotypes — findings about how the user metabolizes specific drugs or drug classes. Distinct from variants because the same variant can produce different phenotypes depending on which drug is involved, and reports often combine multiple variants into a single phenotype call.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "subject": { "type": "string", "description": "What the flag concerns (e.g., 'CYP2D6', 'CYP3A4', 'warfarin sensitivity', 'opioid response')" },
+          "phenotype": { "type": ["string", "null"], "description": "Free-text phenotype label as reported (e.g., 'extensive metabolizer', 'poor metabolizer', 'ultra-rapid metabolizer'). Phenotype naming varies by test; record what the source called it." },
+          "clinical_implication": { "type": ["string", "null"], "description": "What this means for treatment selection or dosing (e.g., 'reduce dose by 50%', 'consider alternative')" },
+          "source": { "type": ["string", "null"] },
+          "date_reported": { "type": ["string", "null"] },
+          "notes": { "type": ["string", "null"] }
+        },
+        "required": ["subject"]
+      }
+    }
+  }
+}

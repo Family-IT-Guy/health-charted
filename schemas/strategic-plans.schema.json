@@ -16,7 +16,14 @@
           "id": { "type": "string", "description": "Unique plan ID (e.g., plan-2026-04-fat-loss)" },
           "outcome": { "type": "string", "description": "Canonical outcome name from wiki/entities/outcomes/ (e.g., fat-loss, lean-mass-gain, hormone-optimization)" },
           "name": { "type": "string", "description": "Short user-facing name (e.g., 'Summer 2026 fat loss')" },
-          "status": { "type": "string", "description": "active, paused, completed, abandoned" },
+          "status": { "type": "string", "description": "Legacy free-text status. Prefer 'lifecycle_status' for new entries." },
+          "lifecycle_status": {
+            "type": ["string", "null"],
+            "enum": [null, "drafted", "active", "paused", "completed", "abandoned"],
+            "description": "Current state of this plan. drafted = proposed but not started; active = under execution; paused = temporarily suspended; completed = success criteria met; abandoned = stopped without completion."
+          },
+          "lifecycle_status_since": { "type": ["string", "null"], "description": "ISO date the current lifecycle_status began" },
+          "lifecycle_status_notes": { "type": ["string", "null"], "description": "Free-text rationale or context for the current status" },
           "start_date": { "type": "string" },
           "planned_reassessment_date": { "type": ["string", "null"], "description": "Next formal review date" },
           "success_criteria": {

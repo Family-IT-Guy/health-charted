@@ -22,7 +22,12 @@
           "suspected_triggers": { "type": ["string", "null"] },
           "new_symptom": { "type": "boolean", "description": "True if this is the first report of this symptom" },
           "hypothesis": { "type": ["string", "null"], "description": "What might explain this, with evidence tier" },
-          "hypothesis_status": { "type": ["string", "null"], "description": "open, confirmed, refuted, superseded" }
+          "hypothesis_status": { "type": ["string", "null"], "description": "open, confirmed, refuted, superseded" },
+          "photo_ids": {
+            "type": "array",
+            "description": "Linked photo entries (IDs from my-data/photos.json) documenting this symptom. Use when visible signs supplement the observation.",
+            "items": { "type": "string" }
+          }
         }
       }
     }

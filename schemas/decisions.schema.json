@@ -15,13 +15,56 @@
         "type": "object",
         "properties": {
           "date": { "type": "string" },
-          "decided": { "type": "string", "description": "What was decided" },
-          "options_considered": { "type": ["string", "null"], "description": "What alternatives were evaluated" },
+          "decision_id": { "type": ["string", "null"], "description": "Stable identifier for cross-referencing this decision from other entries" },
+          "decision": { "type": ["string", "null"], "description": "What was decided. Canonical going forward; supersedes legacy 'decided' field." },
+          "decided": { "type": ["string", "null"], "description": "Legacy alias for 'decision'. Both accepted; new writes should use 'decision'." },
+          "context": { "type": ["string", "null"], "description": "Situation and motivating factors at the time of the decision" },
+          "owner": { "type": ["string", "null"], "description": "Who made the decision (user, framework, joint) and any analytical roles" },
+          "options_considered": {
+            "oneOf": [
+              { "type": "null" },
+              { "type": "string", "description": "Free-text description of alternatives (legacy shape)" },
+              {
+                "type": "array",
+                "description": "Structured alternatives, preferred shape",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "option": { "type": "string" },
+                    "outcome": { "type": ["string", "null"], "description": "What is expected if this option were chosen" },
+                    "evidence_tier": { "type": ["string", "null"] },
+                    "rationale": { "type": ["string", "null"] }
+                  }
+                }
+              }
+            ]
+          },
           "reasoning": { "type": ["string", "null"], "description": "Why this option was chosen" },
           "affects": { "type": ["string", "null"], "description": "What this decision impacts" },
-          "references": { "type": ["string", "null"], "description": "Research or reference files that informed this decision" },
+          "references": { "type": ["string", "null"], "description": "Legacy free-text references field. Prefer 'evidence_referenced' in new writes." },
+          "evidence_referenced": {
+            "oneOf": [
+              { "type": "null" },
+              { "type": "string" },
+              { "type": "array", "items": { "type": "string" } }
+            ],
+            "description": "Research, reference, or my-data files cited as evidence for this decision."
+          },
+          "secondary_effects_surfaced": {
+            "type": ["array", "null"],
+            "items": { "type": "string" },
+            "description": "Downstream effects identified during decision-making (interactions, monitoring needs, schedule shifts) that should be tracked separately."
+          },
+          "review_at": { "type": ["string", "null"], "description": "Trigger or date for revisiting this decision (e.g., 'after 6mo DFI re-test', '2026-12-01')" },
           "outcome": { "type": ["string", "null"], "description": "Filled later when outcome is known" },
-          "reversed_by": { "type": ["string", "null"], "description": "Date and reference to the reversal decision, if reversed" }
+          "reversed_by": { "type": ["string", "null"], "description": "Date and reference to the reversal decision, if reversed" },
+          "lifecycle_status": {
+            "type": ["string", "null"],
+            "enum": [null, "proposed", "accepted", "executed", "superseded"],
+            "description": "Current lifecycle state of this decision. proposed = drafted, awaiting commitment; accepted = committed but not yet executed; executed = action taken; superseded = replaced by later decision (use reversed_by to reference)."
+          },
+          "lifecycle_status_since": { "type": ["string", "null"], "description": "ISO date the current lifecycle_status began" },
+          "lifecycle_status_notes": { "type": ["string", "null"], "description": "Free-text rationale or context for the current status" }
         }
       }
     }

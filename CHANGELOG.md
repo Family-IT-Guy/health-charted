@@ -1,5 +1,44 @@
 # Changelog
 
+## 1.10.0 — 2026-05-06
+
+Schema-shape coherence release. Two new behavioral rules, additive schema fixes across most data types, and a new first-class data type for genomic markers. All schema changes are additive — existing data continues to validate without modification.
+
+### New rule files
+
+- **`.claude/rules/entity-context-verification.md`** — when a health-relevant entity enters the conversation, verify it against loaded data (cluster expansion via INDEX, grep `my-data/`, surface lightweight inline data check + explicit gap list) before substantive engagement. Prevents the "X uncharacterized" / "test for Y" failure mode where the framework recommends investigating something already characterized in the user's records. Includes a defensive backstop that scans drafted output for newly-introduced entities before sending.
+- **`.claude/rules/data-shape-patterns.md`** — positive shape patterns for capturing data, not validation rules. Two patterns: time-varying state goes in array-of-objects with a `date` field (never embed dates in JSON keys); lifecycle states use the triple `<entity>_status` (enum) + `<entity>_status_since` (ISO date) + `<entity>_status_notes` (free text). Schema documents canonical shape; agents extend freely when fields are not yet declared. Prevents the dynamic-key proliferation and free-text status-transition encodings that make accumulated data hard to query.
+
+### Lifecycle triple
+
+Adds `lifecycle_status` (enum) + `lifecycle_status_since` (ISO date) + `lifecycle_status_notes` (free text) to four schemas. Each entity type gets its own enum values appropriate to its phases:
+
+- **`treatments.schema.json`** treatments[] — `pending, planned, ordered, received, active, paused, discontinued`
+- **`health-profile.schema.json`** conditions[] — `suspected, investigating, active, managed, resolved`
+- **`decisions.schema.json`** entries[] — `proposed, accepted, executed, superseded`
+- **`strategic-plans.schema.json`** plans[] — `drafted, active, paused, completed, abandoned`
+
+Existing free-text `status` fields retained as legacy. New writes prefer the structured triple. Transition history continues to live in git log and in `decisions.json` (when the transition was a decision); not duplicated into the data file.
+
+### Schema additions (universal fields previously undeclared)
+
+- **`treatments.schema.json`** — declares `status`, `timing`, `brand_product` (previously written but undeclared); adds `ingredient_amounts` array-of-objects shape for time-stamped formulation snapshots (replaces the dynamic-date-key anti-pattern `ingredient_amounts_verified_<date>`).
+- **`decisions.schema.json`** — declares universal entry fields previously written but undeclared: `decision_id`, `decision` (canonical going forward; `decided` retained as legacy alias), `context`, `owner`, `evidence_referenced` (preferred over legacy `references`), `secondary_effects_surfaced`, `review_at`. `options_considered` now accepts both legacy free-text and a structured array-of-objects shape via `oneOf`.
+- **`research-index.schema.json`** — declares universal fields the research engine produces for every research file: `research_id`, `filename`, `depth`, `date_created`, `source_count`, `filename_date_note`.
+- **`status.schema.json`** — declares `engaged_modules` (set when domain triggers fire mid-session).
+- **`symptoms.schema.json`** — declares `entries[].photo_ids` (links to `my-data/photos.json` for visible-sign documentation).
+- **`training.schema.json`** — declares `body_composition_baseline` (object) and `body_composition_history` (array) for DEXA / BIA / Bod Pod / InBody snapshots. Open-ended `metrics` map accommodates method-specific outputs.
+
+### New data type: genomic markers
+
+- **`schemas/genomic-markers.schema.json`** plus a corresponding `my-data/genomic-markers.json` (created on first relevant capture). Three sub-arrays: `variants` (gene-level findings with `heterozygous, homozygous-major, homozygous-minor` zygosity enum), `methylation_markers` (epigenetic states with `hypermethylated, hypomethylated, normal` enum), and `pharmacogenomic_flags` (metabolizer phenotypes by drug or gene). Source provenance and date are first-class — different test reports vary, methodology evolves.
+
+Why now: prior versions had no canonical home for genetic test data. Users with 23andMe, Genova Detoxigenomic, or pharmacogenomic panel results had to jam findings into `health-profile.json` free-text fields, defeating cross-reference and gap-detection workflows. Anticipated by ARCHITECTURE.md's open-ended entity taxonomy ("Future types: genomic_markers, imaging_markers, wearable_data are added as new keys.").
+
+### Documentation philosophy
+
+The two new rules and the schema additions reflect a stance the system has been operating under implicitly: **schemas are canonical-shape documentation, not hard contracts.** ARCHITECTURE.md's additive-only rule already permits agents to add fields. Schemas serve as the canonical name and shape reference so different sessions don't reinvent the same field under different names. Agents extend freely when no slot fits; future maintainer review folds extensions into schemas if they generalize. No write-time validation hooks, no maintainer-mode files, no migration scripts — the two new rules give agents better defaults for shape decisions; the schema additions promote universally-useful fields to canonical status. User-specific or session-specific drift remains as agent-extension territory.
+
 ## 1.9.0 — 2026-04-28
 
 ### Module spec sharpenings

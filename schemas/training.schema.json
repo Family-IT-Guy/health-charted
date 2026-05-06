@@ -94,6 +94,38 @@
         }
       }
     },
+    "body_composition_baseline": {
+      "type": ["object", "null"],
+      "description": "One-time or periodically updated body composition snapshot. Detailed DEXA / BIA / Bod Pod / InBody output values live under 'metrics' as an open-ended map (units vary by method and instrument). When a new measurement is taken, append a new dated entry to body_composition_history rather than overwriting baseline.",
+      "properties": {
+        "date": { "type": ["string", "null"] },
+        "method": { "type": ["string", "null"], "description": "DEXA | BIA | Bod Pod | InBody | calipers | tape | other" },
+        "metrics": {
+          "type": ["object", "null"],
+          "description": "Open-ended map of method-specific output values. Common keys: weight_lbs, body_fat_percent, fat_free_mass_lbs, total_body_water_lbs, ffmi, frame.",
+          "additionalProperties": { "type": ["string", "number", "null"] }
+        },
+        "source_file": { "type": ["string", "null"], "description": "Path or reference to the original report (PDF, screenshot)" },
+        "notes": { "type": ["string", "null"] }
+      }
+    },
+    "body_composition_history": {
+      "type": ["array", "null"],
+      "description": "Time-stamped body composition measurements. Use this array shape for repeat measurements rather than dated keys (anti-pattern).",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": { "type": "string" },
+          "method": { "type": ["string", "null"] },
+          "metrics": {
+            "type": ["object", "null"],
+            "additionalProperties": { "type": ["string", "number", "null"] }
+          },
+          "source_file": { "type": ["string", "null"] },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    },
     "injuries_and_limitations": {
       "type": "array",
       "description": "Ongoing physical limitations that affect training and whose status may inform intervention reasoning (e.g., recovery interventions, hormone optimization, regenerative protocols)",
