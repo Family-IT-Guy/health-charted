@@ -1,0 +1,33 @@
+{
+  "_comment": "Single source of truth for where each fact/entity canonically lives. One home per fact. The single-canonical-home invariant test (server/src/data-model-invariants.test.ts) enforces this against schemas/, so a second home (the 2026-06 medications contradiction) is structurally impossible to reintroduce. Mirror to repo/ identically. Full contract: docs/DATA-MODEL.md, ADR 0011.",
+  "homes": {
+    "medication":      { "schema": "treatments",      "array": "treatments", "key": "slug", "note": "type=medication" },
+    "supplement":      { "schema": "treatments",      "array": "treatments", "key": "slug", "note": "type=supplement" },
+    "therapy":         { "schema": "treatments",      "array": "treatments", "key": "slug" },
+    "condition":       { "schema": "health-profile",  "array": "conditions", "key": "slug" },
+    "provider":        { "schema": "health-profile",  "array": "providers",  "key": "slug" },
+    "genomic_variant": { "schema": "genomic-markers", "array": "variants",   "key": "slug" },
+    "lab_marker":      { "schema": "lab-results",     "array": null,         "key": "marker", "note": "referenced by slug in entries[].results[].marker; the marker's display name + aliases live in the entity index, not a my-data home array" }
+  },
+  "fact_homes": {
+    "lab_result": "lab-results",
+    "symptom": "symptoms",
+    "decision": "decisions",
+    "visit": "visit-notes",
+    "lifestyle_baseline": "lifestyle",
+    "family_history": "family-history",
+    "training": "training",
+    "photo": "photos",
+    "strategic_plan": "strategic-plans",
+    "action_item": "status"
+  },
+  "forbidden_top_arrays": {
+    "health-profile": ["medications", "supplements", "family_history"]
+  },
+  "forbidden_item_fields": {
+    "health-profile": { "conditions": ["status"] },
+    "treatments": { "treatments": ["status"] },
+    "strategic-plans": { "plans": ["status"] },
+    "decisions": { "entries": ["decided", "references"] }
+  }
+}

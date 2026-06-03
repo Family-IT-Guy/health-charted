@@ -10,6 +10,7 @@ CONTRIBUTING.md
 WIKI-CLAUDE.md
 LICENSE
 MANIFEST
+canonical-homes.json
 .gitignore
 .claude/settings.json
 .claude/rules/tone.md
@@ -42,6 +43,7 @@ guides/update.md
 guides/backup-setup.md
 guides/module-catalog.md
 schemas/decisions.schema.json
+schemas/family-history.schema.json
 schemas/health-profile.schema.json
 schemas/lab-results.schema.json
 schemas/lifestyle.schema.json

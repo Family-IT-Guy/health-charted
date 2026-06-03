@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "health-charted/profile",
   "title": "Health Charted Profile",
-  "description": "Identity, conditions, goals, providers, medications, and family history for the subject.",
+  "description": "Identity, conditions, care team, allergies, and goals for the subject. The subject's own non-intervention, non-measurement clinical context. (Medications/supplements live in treatments.json; family history in family-history.json.)",
   "type": "object",
   "properties": {
     "_type": {
@@ -34,13 +34,14 @@
     },
     "conditions": {
       "type": "array",
-      "description": "Diagnosed or suspected conditions. Canonical name source for cross-file references.",
+      "description": "Diagnosed or suspected conditions. The canonical home for condition entities (referenced by slug from other files).",
       "items": {
         "type": "object",
         "properties": {
-          "condition": { "type": "string", "description": "Canonical condition name" },
+          "slug": { "type": "string", "description": "Stable, immutable kebab-case join key for this condition (e.g., 'iron-deficiency'). Assigned once; never changes. What cross-file references (treatments.treats, etc.) point at. Unique within conditions." },
+          "condition": { "type": "string", "description": "Display name (mutable label)." },
+          "aliases": { "type": ["array", "null"], "description": "Alternate names that resolve to this condition (reclassifications, lay terms). Merges add an alias; never rewrite the slug.", "items": { "type": "string" } },
           "date_of_diagnosis": { "type": ["string", "null"], "description": "When diagnosed or first suspected" },
-          "status": { "type": ["string", "null"], "description": "Legacy free-text status. Prefer 'lifecycle_status' for new entries." },
           "lifecycle_status": {
             "type": ["string", "null"],
             "enum": [null, "suspected", "investigating", "active", "managed", "resolved"],
@@ -49,34 +50,6 @@
           "lifecycle_status_since": { "type": ["string", "null"], "description": "ISO date the current lifecycle_status began" },
           "lifecycle_status_notes": { "type": ["string", "null"], "description": "Free-text rationale or context for the current status" },
           "notes": { "type": ["string", "null"] }
-        }
-      }
-    },
-    "medications": {
-      "type": "array",
-      "description": "Current and past medications. Canonical name source for cross-file references.",
-      "items": {
-        "type": "object",
-        "properties": {
-          "name": { "type": "string", "description": "Canonical medication name. Use this exact string in all other files." },
-          "dose": { "type": ["string", "null"] },
-          "frequency": { "type": ["string", "null"] },
-          "prescriber": { "type": ["string", "null"] },
-          "start_date": { "type": ["string", "null"] },
-          "reason": { "type": ["string", "null"], "description": "Condition or symptom this treats" }
-        }
-      }
-    },
-    "supplements": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "name": { "type": "string", "description": "Canonical supplement name" },
-          "dose": { "type": ["string", "null"] },
-          "form": { "type": ["string", "null"] },
-          "frequency": { "type": ["string", "null"] },
-          "start_date": { "type": ["string", "null"] }
         }
       }
     },
@@ -94,22 +67,19 @@
     },
     "providers": {
       "type": "array",
-      "description": "Care team. Canonical name source for provider references in other files.",
+      "description": "Care team. The canonical home for provider entities (referenced by slug from other files).",
       "items": {
         "type": "object",
         "properties": {
+          "slug": { "type": "string", "description": "Stable, immutable kebab-case join key for this provider (e.g., 'jane-okafor-endocrinology'). Disambiguate genuine collisions with a meaningful qualifier. Assigned once; never changes." },
           "role": { "type": "string" },
-          "name": { "type": "string", "description": "Canonical provider name. Use this exact string in all other files." },
+          "name": { "type": "string", "description": "Display name (mutable label)." },
+          "aliases": { "type": ["array", "null"], "description": "Alternate names for this provider.", "items": { "type": "string" } },
           "practice": { "type": ["string", "null"] },
           "approach": { "type": ["string", "null"], "description": "Conventional, integrative, functional, etc." },
           "notes": { "type": ["string", "null"] }
         }
       }
-    },
-    "family_history": {
-      "type": "array",
-      "description": "Relevant family health history entries",
-      "items": { "type": "string" }
     },
     "insurance": {
       "type": ["string", "null"],

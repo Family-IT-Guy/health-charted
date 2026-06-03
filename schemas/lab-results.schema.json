@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "health-charted/lab-history",
   "title": "Health Charted Lab History",
-  "description": "Timestamped lab results with context, interpretation, and recheck scheduling.",
+  "description": "Timestamped lab results with context, interpretation, and recheck scheduling. Values are stored as native numerics so trend and threshold analysis reads numbers directly, never re-parses strings. Raw facts only — functional-optimal targets are interpretation and live in the reference/ layer.",
   "type": "object",
   "properties": {
     "_type": {
@@ -21,11 +21,21 @@
             "items": {
               "type": "object",
               "properties": {
-                "marker": { "type": "string" },
-                "value": { "type": "string" },
-                "standard_range": { "type": ["string", "null"] },
-                "functional_optimal": { "type": ["string", "null"] },
-                "assessment": { "type": ["string", "null"] }
+                "marker": { "type": "string", "description": "Lab marker slug (kebab, e.g., 'ferritin'). The stable join key; the marker's display name and aliases live in the entity index (research/reference INDEX)." },
+                "value_num": { "type": ["number", "null"], "description": "Numeric magnitude of the result — what trend/threshold math reads directly. Null for purely qualitative results." },
+                "value_text": { "type": ["string", "null"], "description": "Qualitative or operator-bearing result captured verbatim ('positive', 'trace', '<5', 'negative'). Used when the result is not a clean number, or to preserve the original alongside value_num." },
+                "unit": { "type": ["string", "null"], "description": "Unit for value_num (e.g., 'ng/mL')." },
+                "standard_range": {
+                  "type": ["object", "null"],
+                  "description": "The lab-reported reference range — a FACT about this measurement (stays on the result). Functional/optimal targets are interpretation and live in reference/.",
+                  "properties": {
+                    "low": { "type": ["number", "null"] },
+                    "high": { "type": ["number", "null"] },
+                    "unit": { "type": ["string", "null"] },
+                    "text": { "type": ["string", "null"], "description": "Non-numeric range expression when low/high don't apply (e.g., 'Negative')." }
+                  }
+                },
+                "assessment": { "type": ["string", "null"], "description": "Free-text interpretive note for this result." }
               }
             }
           },

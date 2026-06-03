@@ -16,7 +16,6 @@
           "id": { "type": "string", "description": "Unique plan ID (e.g., plan-2026-04-fat-loss)" },
           "outcome": { "type": "string", "description": "Canonical outcome name from wiki/entities/outcomes/ (e.g., fat-loss, lean-mass-gain, hormone-optimization)" },
           "name": { "type": "string", "description": "Short user-facing name (e.g., 'Summer 2026 fat loss')" },
-          "status": { "type": "string", "description": "Legacy free-text status. Prefer 'lifecycle_status' for new entries." },
           "lifecycle_status": {
             "type": ["string", "null"],
             "enum": [null, "drafted", "active", "paused", "completed", "abandoned"],

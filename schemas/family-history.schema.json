@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "health-charted/family-history",
+  "title": "Health Charted Family History",
+  "description": "The subject's family health history — about relatives, as it bears on the subject's hereditary risk. One entry per relative. Distinct from the subject's own profile; informs screening and risk reasoning.",
+  "type": "object",
+  "properties": {
+    "_type": {
+      "const": "health-charted/family-history",
+      "description": "File type identifier"
+    },
+    "relatives": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "relationship": { "type": "string", "description": "Relationship to the subject (e.g., 'mother', 'paternal grandfather', 'maternal aunt', 'sibling')." },
+          "name": { "type": ["string", "null"], "description": "Relative's name if recorded (optional)." },
+          "vital_status": { "type": ["string", "null"], "enum": [null, "living", "deceased"] },
+          "age": { "type": ["string", "null"], "description": "Current age, or age at death if deceased." },
+          "cause_of_death": { "type": ["string", "null"], "description": "If deceased and known." },
+          "conditions": {
+            "type": "array",
+            "description": "Conditions this relative has/had, relevant to the subject's risk.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "slug": { "type": ["string", "null"], "description": "Condition concept slug (same namespace as health-profile.conditions[].slug), so 'this relative had X' links to the X concept whether or not the subject has it." },
+                "name": { "type": "string", "description": "Condition display name." },
+                "age_of_onset": { "type": ["string", "null"], "description": "Age or approximate age the relative developed it (a key hereditary-risk signal)." },
+                "notes": { "type": ["string", "null"] }
+              }
+            }
+          },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    }
+  }
+}

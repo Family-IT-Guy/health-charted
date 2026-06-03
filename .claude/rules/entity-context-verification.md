@@ -17,7 +17,9 @@ Fires the first time an entity is introduced in a session.
 2. **Verify the cluster against my-data/.** For each cluster member, grep the appropriate my-data file:
    - Markers → `lab-results.json`
    - Treatments / supplements / medications → `treatments.json`
-   - Conditions, providers, family history → `health-profile.json`
+   - Conditions, providers → `health-profile.json`
+   - Family history → `family-history.json`
+   - Genomic variants → `genomic-markers.json`
    - Symptoms → `symptoms.json`
    - Lifestyle factors → `lifestyle.json`
    - Decisions referencing the entity → `decisions.json`

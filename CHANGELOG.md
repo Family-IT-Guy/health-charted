@@ -1,5 +1,38 @@
 # Changelog
 
+## 2.0.0 — 2026-06-03
+
+**Breaking: v1.0 data-model freeze.** This is the deliberate one-time breaking pass on the data model, taken now while almost no accumulated data exists, so the schemas can be locked and held additive-only for the system's multi-decade lifespan. After this release the additive-only rule is enforced: removing or retyping a field requires a deliberate snapshot bump plus a decision record, never a silent edit. Existing data is not auto-migrated — the few existing instances are hand-converted.
+
+### Join key — stable slugs
+
+Named clinical entities (medications, supplements, conditions, lab markers, genomic variants, providers) now reference each other across files by an immutable `slug` (a kebab-case key assigned once at creation, e.g. `metformin`, `iron-deficiency`), not by display name. `name` becomes a mutable display label that can change (brand→generic, reclassification) without breaking any reference; `aliases[]` holds alternate names and absorbs merges. The slug is permanent. This replaces name-as-join, where a rename forced a cascading multi-file rewrite and corrupted history. Collisions get a meaningful qualifier (`john-smith-cardiology`), never a numeric suffix. Entry-level records (photos, visit refs) keep opaque IDs.
+
+### Home placement — one canonical home per fact
+
+- **Medications and supplements live only in `treatments.json`.** They are removed from `health-profile.json`, resolving a long-standing double-home (the same fact had two canonical locations).
+- **Family history moves to its own `family-history.json`** with a first-class per-relative schema (relationship, conditions by condition-slug, age of onset, vital status / cause, notes) — no longer an under-modeled string array on the profile.
+- **`health-profile.json` is now identity + the subject's own clinical context**: subject, user, goals, conditions, providers, allergies, insurance.
+- **Lifestyle vs. intervention discriminator stated in the rules**, not relocated: `treatments.json` is the single home for every *intervention* (anything tracked for effect, with a lifecycle); `lifestyle.json` holds *baseline context*. The same topic (e.g. exercise) can appear in both as different facts.
+- **Genomic markers stay their own file with routing now wired**; training / photos / strategic-plans routing entries completed.
+
+### Field shape — native lab numerics
+
+`lab-results.json` is restructured for the system's trajectory and threshold math: `marker` becomes a slug; values are stored as `value_num` (number|null) + `value_text` (string|null, for qualitative or operator results) + `unit`; the lab-reported reference range becomes a structured `standard_range` object. `functional_optimal` moves out of the raw result to the `reference/` interpretation layer, where threshold-claims belong. Doses stay free-text (not math-summed). `treats: [condition-slug]` on treatments becomes a first-class cross-reference.
+
+### Legacy field removal (reverses 1.10.0's retention)
+
+The eight vestige fields that 1.10.0 retained as legacy aliases are now removed (1.10.0's "retained as legacy" stance is superseded by this clean break): `health-profile.medications`, `health-profile.supplements`, `health-profile.conditions[].status`, `treatments[].status`, `strategic-plans[].status`, `decisions[].decided`, `decisions[].references`, and the string form of `decisions[].alternatives`. Each folds into its canonical successor (the lifecycle triple, `evidence_referenced`, the structured `alternatives`, or the entity's new home).
+
+### New file and registry
+
+- **`schemas/family-history.schema.json`** — the per-relative family-history schema (added to MANIFEST).
+- **`canonical-homes.json`** — a machine-readable registry naming the single canonical home for each entity and fact type, plus the arrays/fields that must stay absent (so a second home cannot be reintroduced). Added to MANIFEST.
+
+### Documentation
+
+`ARCHITECTURE.md` updated: the entity-index section now describes slug-as-join (immutable key, mutable name, aliases for merges); the additive-only section notes the schemas are frozen at v1.0 and removals/retypes are deliberate documented acts from here forward.
+
 ## 1.10.0 — 2026-05-06
 
 Schema-shape coherence release. Two new behavioral rules, additive schema fixes across most data types, and a new first-class data type for genomic markers. All schema changes are additive — existing data continues to validate without modification.

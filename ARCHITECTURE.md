@@ -20,6 +20,8 @@ Nothing can go offline, get deprecated, change its pricing, or shut down. The fi
 
 Data file schemas (defined in `schemas/`) follow one rule: fields can be added but never renamed or removed. A file written in 2026 must still be valid in 2036. When a new version adds fields, the AI adds them with null values the next time it writes to that file. No migration scripts, no breaking changes, no data conversion.
 
+The schemas are frozen at v1.0, and additive-only is enforced from that line forward: a field may be added, but removing or retyping one is a deliberate, documented act (a snapshot bump plus a decision record), never a silent edit.
+
 ### Platform independence
 
 The system instructions live in `CLAUDE.md` (Claude Desktop's convention). The content is not Claude-specific. Any AI that can read markdown instructions and read/write local files can operate this system. The README documents how to adapt it to other platforms.
@@ -110,7 +112,7 @@ The entity index enables four operations:
 - **Propagation:** when source data changes, find which reference files to flag
 - **Tiered loading:** in large knowledge bases, load only files relevant to the current session's topic
 
-Entity names follow the naming discipline defined in `.claude/rules/data-routing.md`. The same canonical name for a medication appears in my-data/treatments.json, in research INDEX entities, and in reference INDEX entities. That consistency is what makes the join work.
+Entity names follow the naming discipline defined in `.claude/rules/data-routing.md`. Named entities join across files by a stable `slug` — an immutable kebab-case key (`metformin`) assigned once at creation — not by their display name. The same medication's slug appears in my-data/treatments.json, in research INDEX entities, and in reference INDEX entities; that shared slug is what makes the join work. The `name` is a mutable display label that can change (brand to generic, reclassification) without breaking any reference, and `aliases[]` holds alternate names and absorbs merges. The slug never changes.
 
 ### Propagation as flagging
 

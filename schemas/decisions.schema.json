@@ -16,17 +16,15 @@
         "properties": {
           "date": { "type": "string" },
           "decision_id": { "type": ["string", "null"], "description": "Stable identifier for cross-referencing this decision from other entries" },
-          "decision": { "type": ["string", "null"], "description": "What was decided. Canonical going forward; supersedes legacy 'decided' field." },
-          "decided": { "type": ["string", "null"], "description": "Legacy alias for 'decision'. Both accepted; new writes should use 'decision'." },
+          "decision": { "type": ["string", "null"], "description": "What was decided." },
           "context": { "type": ["string", "null"], "description": "Situation and motivating factors at the time of the decision" },
           "owner": { "type": ["string", "null"], "description": "Who made the decision (user, framework, joint) and any analytical roles" },
           "options_considered": {
             "oneOf": [
               { "type": "null" },
-              { "type": "string", "description": "Free-text description of alternatives (legacy shape)" },
               {
                 "type": "array",
-                "description": "Structured alternatives, preferred shape",
+                "description": "Structured alternatives",
                 "items": {
                   "type": "object",
                   "properties": {
@@ -41,7 +39,6 @@
           },
           "reasoning": { "type": ["string", "null"], "description": "Why this option was chosen" },
           "affects": { "type": ["string", "null"], "description": "What this decision impacts" },
-          "references": { "type": ["string", "null"], "description": "Legacy free-text references field. Prefer 'evidence_referenced' in new writes." },
           "evidence_referenced": {
             "oneOf": [
               { "type": "null" },

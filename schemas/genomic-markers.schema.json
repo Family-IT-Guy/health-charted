@@ -11,11 +11,12 @@
     },
     "variants": {
       "type": "array",
-      "description": "Single nucleotide variants and other gene-level findings. Canonical name source for genotype references in other files.",
+      "description": "Single nucleotide variants and other gene-level findings. The canonical home for genotype variant entities (referenced by slug from other files).",
       "items": {
         "type": "object",
         "properties": {
-          "gene": { "type": "string", "description": "Canonical gene name (e.g., 'MTHFR', 'BHMT', 'APOE')" },
+          "slug": { "type": "string", "description": "Stable, immutable kebab-case join key for this variant (e.g., 'mthfr-c677t'). Assigned once; never changes. What cross-file references point at." },
+          "gene": { "type": "string", "description": "Gene name display label (e.g., 'MTHFR', 'BHMT', 'APOE')" },
           "variant": { "type": "string", "description": "Variant identifier. Either protein-notation (e.g., 'C677T') or rs-number (e.g., 'rs1801133') is accepted; use the form the source uses. Cross-references between forms can be noted in 'notes'." },
           "alleles": { "type": ["string", "null"], "description": "Observed alleles (e.g., 'C/T', 'A/A', 'ε3/ε4'). Format depends on variant type." },
           "zygosity": {

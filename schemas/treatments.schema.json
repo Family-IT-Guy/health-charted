@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "health-charted/treatment-stack",
   "title": "Health Charted Treatment Stack",
-  "description": "Medications, supplements, therapies, and environmental modifications with mechanism and evidence tracking.",
+  "description": "Medications, supplements, therapies, and environmental modifications with mechanism and evidence tracking. The single canonical home for every intervention the subject takes or adopts (any type).",
   "type": "object",
   "properties": {
     "_type": {
@@ -11,19 +11,21 @@
     },
     "treatments": {
       "type": "array",
-      "description": "Canonical name source for medication and supplement references in other files.",
+      "description": "The intervention stack. The canonical home for medications and supplements (cross-referenced by slug from other files).",
       "items": {
         "type": "object",
         "properties": {
           "type": { "type": "string", "description": "medication, supplement, therapy, environmental modification, etc." },
-          "name": { "type": "string", "description": "Canonical treatment name. Use this exact string in all other files." },
+          "slug": { "type": "string", "description": "Stable, immutable kebab-case join key for this treatment entity (e.g., 'metformin'). Assigned once at creation; never changes. What every cross-file reference points at. Unique within this file's treatments." },
+          "name": { "type": "string", "description": "Display name (mutable label). May be updated (brand→generic, reclassification) without changing the slug." },
+          "aliases": { "type": ["array", "null"], "description": "Alternate names/spellings/brands that resolve to this entity. Merging two names adds an alias; never rewrite the slug.", "items": { "type": "string" } },
+          "treats": { "type": ["array", "null"], "description": "Condition slugs this treatment is for (cross-reference into health-profile.conditions[].slug).", "items": { "type": "string" } },
           "brand_product": { "type": ["string", "null"], "description": "Specific brand and product name (e.g., 'Carlson Norwegian Cod Liver Oil')" },
-          "dose": { "type": ["string", "null"] },
+          "dose": { "type": ["string", "null"], "description": "Free-text dose — captures real-world mess ('1-2 tablets PRN', 'sliding scale'). Intentionally not structured." },
           "form": { "type": ["string", "null"] },
           "frequency": { "type": ["string", "null"] },
           "timing": { "type": ["string", "null"], "description": "When during the day this is taken (e.g., 'morning with food', 'evening', 'before bed')" },
           "start_date": { "type": ["string", "null"] },
-          "status": { "type": ["string", "null"], "description": "Legacy free-text status. Prefer 'lifecycle_status' for new entries." },
           "lifecycle_status": {
             "type": ["string", "null"],
             "enum": [null, "pending", "planned", "ordered", "received", "active", "paused", "discontinued"],
